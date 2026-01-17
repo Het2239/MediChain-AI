@@ -2,7 +2,7 @@
 backend/.env
 frontend/.env
 contracts/.env
-
+.env
 # Dependencies
 node_modules/
 */node_modules/
