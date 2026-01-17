@@ -1,0 +1,35 @@
+{
+  "name": "medichain-ai",
+  "version": "1.0.0",
+  "description": "Privacy-Preserving Unified Health Records with AI Intelligence",
+  "private": true,
+  "workspaces": [
+    "contracts",
+    "backend",
+    "frontend"
+  ],
+  "scripts": {
+    "setup": "npm install && cd contracts && npm install && cd ../backend && npm install && cd ../frontend && npm install",
+    "contracts:test": "cd contracts && npm test",
+    "contracts:deploy": "cd contracts && npm run deploy",
+    "backend:dev": "cd backend && npm run dev",
+    "backend:test": "cd backend && npm test",
+    "frontend:dev": "cd frontend && npm run dev",
+    "frontend:build": "cd frontend && npm run build",
+    "dev": "concurrently \"npm run backend:dev\" \"npm run frontend:dev\"",
+    "test": "npm run contracts:test && npm run backend:test"
+  },
+  "keywords": [
+    "blockchain",
+    "healthcare",
+    "ipfs",
+    "ai",
+    "rag",
+    "privacy"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

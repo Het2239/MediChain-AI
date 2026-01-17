@@ -1,0 +1,11 @@
+{
+  "network": "sepolia",
+  "chainId": "11155111",
+  "deployer": "0xD3dc27A44A84a9DdcF86804556FE601503903a51",
+  "timestamp": "2026-01-15T09:28:02.299Z",
+  "contracts": {
+    "PatientRegistry": "0x52f1c40755a47915A93B131405a2C95eA904A6Db",
+    "DoctorRegistry": "0xBEdf65e08498639B7b0000fCA892f28fa3d15021",
+    "AccessControl": "0x10b5cC443a0172fcc390Ef7831c79B063dbe3CCD"
+  }
+}

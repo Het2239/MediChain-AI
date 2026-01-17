@@ -1,0 +1,18 @@
+# IMPORTANT: Add deployed contract addresses to make the app work
+
+# Copy these lines to your .env file:
+
+# Backend Contract Addresses (Sepolia Testnet)
+PATIENT_REGISTRY_ADDRESS=0x52f1c40755a47915A93B131405a2C95eA904A6Db
+DOCTOR_REGISTRY_ADDRESS=0xBEdf65e08498639B7b0000fCA892f28fa3d15021
+ACCESS_CONTROL_ADDRESS=0x10b5cC443a0172fcc390Ef7831c79B063dbe3CCD
+
+# Also add these for frontend (if you have a frontend/.env file):
+VITE_PATIENT_REGISTRY_ADDRESS=0x52f1c40755a47915A93B131405a2C95eA904A6Db
+VITE_DOCTOR_REGISTRY_ADDRESS=0xBEdf65e08498639B7b0000fCA892f28fa3d15021
+VITE_ACCESS_CONTROL_ADDRESS=0x10b5cC443a0172fcc390Ef7831c79B063dbe3CCD
+
+# Admin wallet address (the deployer address)
+ADMIN_ADDRESS=0xD3dc27A44A84a9DdcF86804556FE601503903a51
+
+# After updating .env, restart both backend and frontend servers
