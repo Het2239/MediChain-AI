@@ -34,15 +34,20 @@ export default function PatientRecords() {
                 headers: { 'X-Wallet-Address': address }
             });
 
-            // Apply custom filenames from localStorage
+            // Get deleted files and custom names from localStorage
+            const deletedFiles = JSON.parse(localStorage.getItem('deletedFiles') || '[]');
             const customNames = JSON.parse(localStorage.getItem('customFileNames') || '{}');
-            const recordsWithCustomNames = (res.data.records || []).map(record => ({
-                ...record,
-                metadata: {
-                    ...record.metadata,
-                    filename: customNames[record.cid] || record.metadata?.filename || `Untitled ${record.fileType?.toUpperCase() || 'FILE'}`
-                }
-            }));
+
+            // Filter out deleted files and apply custom names
+            const recordsWithCustomNames = (res.data.records || [])
+                .filter(record => !deletedFiles.includes(record.cid))
+                .map(record => ({
+                    ...record,
+                    metadata: {
+                        ...record.metadata,
+                        filename: customNames[record.cid] || record.metadata?.filename || `Untitled ${record.fileType?.toUpperCase() || 'FILE'}`
+                    }
+                }));
 
             setRecords(recordsWithCustomNames);
         } catch (error) {
@@ -71,6 +76,13 @@ export default function PatientRecords() {
             await axios.delete(`${API_URL}/file/${record.cid}`, {
                 headers: { 'X-Wallet-Address': address }
             });
+
+            // Track deleted file in localStorage
+            const deletedFiles = JSON.parse(localStorage.getItem('deletedFiles') || '[]');
+            if (!deletedFiles.includes(record.cid)) {
+                deletedFiles.push(record.cid);
+                localStorage.setItem('deletedFiles', JSON.stringify(deletedFiles));
+            }
 
             // Remove from localStorage custom names
             const customNames = JSON.parse(localStorage.getItem('customFileNames') || '{}');

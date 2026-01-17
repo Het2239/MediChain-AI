@@ -1,44 +1,32 @@
+# Add .env files to gitignore
+backend/.env
+frontend/.env
+contracts/.env
+
 # Dependencies
 node_modules/
-package-lock.json
-yarn.lock
-
-# Environment variables
-.env
-.env.local
-.env.*.local
+*/node_modules/
 
 # Build outputs
 dist/
 build/
-*.tsbuildinfo
+*/dist/
+*/build/
 
-# Smart Contracts
-contracts/artifacts/
+# Hardhat
+cache/
+artifacts/
 contracts/cache/
-contracts/typechain-types/
-coverage/
-coverage.json
+contracts/artifacts/
 
-# Backend
-backend/data/
-backend/uploads/
-backend/logs/
+# Logs
 *.log
+npm-debug.log*
+logs/
 
-# Frontend
-frontend/dist/
-frontend/.vite/
-frontend/.cache/
-
-# IPFS cache
-.ipfs/
-ipfs_cache/
-
-# Vector database
-vector_store/
-*.faiss
-*.index
+# OS files
+.DS_Store
+Thumbs.db
 
 # IDE
 .vscode/
@@ -47,14 +35,10 @@ vector_store/
 *.swo
 *~
 
-# OS
-.DS_Store
-Thumbs.db
-
-# Testing
-.nyc_output/
+# Environment
+.env.local
+.env.*.local
 
 # Temporary files
-tmp/
-temp/
 *.tmp
+.cache/

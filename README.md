@@ -1,207 +1,125 @@
-# MediChain AI 🏥⛓️🤖
+# 🏥 MediChain AI
 
-**Privacy-Preserving Unified Health Records with AI Intelligence**
+A decentralized healthcare records management system built on blockchain technology with AI-powered features.
 
-A decentralized healthcare record management platform integrating Blockchain, IPFS, and AI-based Retrieval-Augmented Generation (RAG) to provide secure, patient-controlled access to medical data with intelligent summarization and insights.
+## ✨ Features
 
----
-
-## 🌟 Features
-
-- 🔐 **Patient-Controlled Access**: Blockchain-based access control with wallet authentication
-- 📦 **Decentralized Storage**: Encrypted medical records stored on IPFS via Pinata
-- 🤖 **AI-Powered Insights**: RAG pipeline for medical summarization and semantic search
-- 👨‍⚕️ **Doctor Verification**: Admin-verified healthcare providers
-- 📊 **Smart Dashboards**: Separate interfaces for patients, doctors, and admins
-- 🔍 **Audit Trail**: Complete blockchain-based access logging
-
----
-
-## 🏗️ Architecture
-
-```
-┌─────────────┐      ┌──────────────┐      ┌─────────────┐
-│   Patient   │      │    Doctor    │      │    Admin    │
-│  Dashboard  │      │  Dashboard   │      │  Dashboard  │
-└──────┬──────┘      └──────┬───────┘      └──────┬──────┘
-       │                    │                      │
-       └────────────────────┼──────────────────────┘
-                            │
-                    ┌───────▼────────┐
-                    │  React Frontend │
-                    │ (Wagmi/Rainbow) │
-                    └───────┬─────────┘
-                            │
-       ┌────────────────────┼────────────────────┐
-       │                    │                    │
-┌──────▼──────┐    ┌────────▼────────┐   ┌──────▼──────┐
-│  Blockchain │    │  Backend API    │   │  IPFS/Pinata│
-│  (Sepolia)  │    │  (Express.js)   │   │  (Storage)  │
-└─────────────┘    └────────┬────────┘   └─────────────┘
-                            │
-                    ┌───────▼────────┐
-                    │  AI/RAG Engine │
-                    │ (Groq + FAISS) │
-                    └────────────────┘
-```
-
----
-
-## 🛠️ Technology Stack
-
-| Layer | Technology |
-|-------|-----------|
-| **Blockchain** | Solidity, Hardhat, Ethers.js |
-| **Storage** | IPFS, Pinata |
-| **Backend** | Node.js, Express |
-| **Encryption** | AES-256-CBC |
-| **AI/RAG** | Groq API, FAISS |
-| **Frontend** | React, Wagmi, RainbowKit, TailwindCSS |
-
----
+- **🔐 Blockchain Security**: Immutable medical records stored on Ethereum
+- **📁 IPFS Storage**: Encrypted file storage using Pinata
+- **👤 Patient Portal**: Upload, manage, and share medical records
+- **👨‍⚕️ Doctor Access**: Request and view authorized patient records
+- **🔒 Encryption**: End-to-end encryption for all medical files
+- **📊 Admin Dashboard**: Verify doctors and monitor system activity
+- **🎯 Access Control**: Smart contract-based permission management
 
 ## 🚀 Quick Start
 
 ### Prerequisites
 
-- Node.js v18+
-- npm or yarn
-- MetaMask or compatible Web3 wallet
+- Node.js v18 or higher
+- MetaMask browser extension
 - Pinata account (for IPFS)
-- Groq API key (for AI features)
 
 ### Installation
 
-1. **Clone the repository**
-   ```bash
-   git clone <repository-url>
-   cd MediChain
+**Linux/macOS:**
+```bash
+git clone <your-repo-url>
+cd MediChain
+chmod +x setup.sh start.sh
+./setup.sh
+```
+
+**Windows:**
+```powershell
+git clone <your-repo-url>
+cd MediChain
+.\setup.ps1
+```
+
+### Configuration
+
+1. Get Pinata API keys from [pinata.cloud](https://pinata.cloud/)
+2. Update `backend/.env`:
+   ```env
+   PINATA_API_KEY=your_api_key
+   PINATA_SECRET_API_KEY=your_secret_key
    ```
 
-2. **Install dependencies**
-   ```bash
-   npm run setup
-   ```
+### Running
 
-3. **Configure environment variables**
-   ```bash
-   cp .env.example .env
-   # Edit .env with your API keys
-   ```
+**Linux/macOS:**
+```bash
+./start.sh
+```
 
-4. **Deploy smart contracts**
-   ```bash
-   npm run contracts:deploy
-   ```
+**Windows:**
+```powershell
+.\start.ps1
+```
 
-5. **Start development servers**
-   ```bash
-   npm run dev
-   ```
+Access the application at **http://localhost:5173**
 
-   This will start:
-   - Backend API on `http://localhost:3001`
-   - Frontend on `http://localhost:5173`
+## 📖 Documentation
 
----
+For detailed setup instructions, see [SETUP.md](SETUP.md)
 
-## 📁 Project Structure
+## 🏗️ Architecture
 
 ```
 MediChain/
-├── contracts/           # Smart contracts
-│   ├── contracts/
-│   │   ├── PatientRegistry.sol
-│   │   ├── DoctorRegistry.sol
-│   │   └── AccessControl.sol
-│   ├── scripts/
-│   └── test/
-├── backend/            # Backend API
-│   ├── src/
-│   │   ├── controllers/
-│   │   ├── routes/
-│   │   ├── services/
-│   │   │   ├── encryption.service.js
-│   │   │   ├── ipfs.service.js
-│   │   │   └── rag/
-│   │   └── middleware/
-│   └── package.json
-├── frontend/           # React frontend
-│   ├── src/
-│   │   ├── components/
-│   │   ├── pages/
-│   │   ├── hooks/
-│   │   └── config/
-│   └── package.json
-└── docs/              # Documentation
+├── frontend/          # React + Vite + TailwindCSS
+├── backend/           # Node.js + Express API
+├── contracts/         # Solidity smart contracts
+├── setup.sh/.ps1      # Setup scripts
+└── start.sh/.ps1      # Start scripts
 ```
 
----
+## 🔑 Key Technologies
 
-## 📖 Usage
+- **Frontend**: React, Vite, Wagmi, RainbowKit, TailwindCSS
+- **Backend**: Node.js, Express, Ethers.js
+- **Blockchain**: Solidity, Hardhat
+- **Storage**: IPFS (Pinata), Encrypted files
+- **Authentication**: MetaMask wallet connection
 
-### For Patients
+## 🎯 Usage
 
-1. **Connect Wallet**: Click "Connect Wallet" and authenticate
-2. **Upload Records**: Drag and drop medical documents (they'll be encrypted automatically)
-3. **Manage Access**: Approve or revoke doctor access requests
-4. **View AI Summary**: See intelligent insights from your medical history
+### As a Patient
+1. Connect MetaMask wallet
+2. Register as patient
+3. Upload encrypted medical records
+4. Manage doctor access permissions
 
-### For Doctors
+### As a Doctor
+1. Get verified by admin
+2. Request access to patient records
+3. View and download authorized files
 
-1. **Get Verified**: Request verification from admin
-2. **Request Access**: Enter patient wallet address to request access
-3. **View Records**: Access approved patient records
-4. **Use AI Analysis**: Get AI-powered summaries and semantic search
+### As an Admin
+1. Use admin secret to access panel
+2. Verify doctor registrations
+3. Monitor system activity
 
-### For Admins
+## 🔐 Security
 
-1. **Verify Doctors**: Review and approve doctor verification requests
-2. **Monitor System**: View system statistics and audit logs
-3. **Manage Users**: Revoke access when needed
-
----
-
-## 🔒 Security
-
-- **Encryption**: All files encrypted with AES-256 before IPFS upload
-- **Access Control**: Blockchain-enforced permission system
-- **Key Management**: Encryption keys derived from wallet + password (never stored)
-- **Audit Trail**: All access events logged on-chain
-
----
-
-## 🧪 Testing
-
-```bash
-# Test smart contracts
-npm run contracts:test
-
-# Test backend
-npm run backend:test
-
-# Run all tests
-npm test
-```
-
----
+- All files are encrypted before upload
+- Smart contract-based access control
+- Blockchain audit trail
+- Immutable record keeping
 
 ## 📝 License
 
-MIT
-
----
+MIT License
 
 ## 🤝 Contributing
 
-Contributions welcome! Please read the contributing guidelines first.
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## 📧 Support
+
+For issues and questions, please open an issue on GitHub.
 
 ---
 
-## 📧 Contact
-
-For questions or support, please open an issue.
-
----
-
-**Built with ❤️ for secure, patient-controlled healthcare**
+Built with ❤️ using blockchain technology
