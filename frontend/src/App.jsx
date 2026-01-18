@@ -9,9 +9,11 @@ import HomePage from './pages/HomePage';
 import PatientDashboard from './pages/patient/Dashboard';
 import PatientRecords from './pages/patient/Records';
 import PatientAccessControl from './pages/patient/AccessControl';
+import PatientInsights from './pages/patient/Insights';
 import DoctorDashboard from './pages/doctor/Dashboard';
 import DoctorPatients from './pages/doctor/Patients';
 import DoctorPatientRecords from './pages/doctor/PatientRecords';
+import DoctorPatientInsights from './pages/doctor/PatientInsights';
 import AdminDashboard from './pages/admin/Dashboard';
 
 function App() {
@@ -27,6 +29,7 @@ function App() {
                     <Route index element={<PatientDashboard />} />
                     <Route path="records" element={<PatientRecords />} />
                     <Route path="access-control" element={<PatientAccessControl />} />
+                    <Route path="insights" element={<PatientInsights />} />
                 </Route>
 
                 {/* Doctor Routes */}
@@ -34,6 +37,7 @@ function App() {
                     <Route index element={<DoctorDashboard />} />
                     <Route path="patients" element={<DoctorPatients />} />
                     <Route path="patient/:patientAddress/records" element={<DoctorPatientRecords />} />
+                    <Route path="patient/:patientAddress/insights" element={<DoctorPatientInsights />} />
                 </Route>
 
                 {/* Admin Routes */}

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAccount } from 'wagmi';
-import { FileText, Download, ArrowLeft, Lock } from 'lucide-react';
+import { FileText, Download, ArrowLeft, Lock, Brain } from 'lucide-react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import FileDownloadModal from '../../components/FileDownloadModal';
@@ -64,21 +64,31 @@ export default function DoctorPatientRecords() {
     return (
         <div className="space-y-6">
             {/* Header */}
-            <div className="flex items-center space-x-4">
-                <button
-                    onClick={() => navigate('/doctor/patients')}
-                    className="btn btn-secondary"
-                >
-                    <ArrowLeft className="w-4 h-4" />
-                </button>
-                <div>
-                    <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-                        Patient Medical Records
-                    </h1>
-                    <p className="mt-1 text-sm text-gray-600 dark:text-gray-400 font-mono">
-                        Patient: {patientAddress}
-                    </p>
+            <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-4">
+                    <button
+                        onClick={() => navigate('/doctor/patients')}
+                        className="btn btn-secondary"
+                    >
+                        <ArrowLeft className="w-4 h-4" />
+                    </button>
+                    <div>
+                        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+                            Patient Medical Records
+                        </h1>
+                        <p className="mt-1 text-sm text-gray-600 dark:text-gray-400 font-mono">
+                            Patient: {patientAddress}
+                        </p>
+                    </div>
                 </div>
+                <button
+                    onClick={() => navigate(`/doctor/patient/${patientAddress}/insights`)}
+                    className="btn btn-primary inline-flex items-center space-x-2"
+                    disabled={records.length === 0}
+                >
+                    <Brain className="w-5 h-5" />
+                    <span>AI Insights</span>
+                </button>
             </div>
 
             {/* Records List */}

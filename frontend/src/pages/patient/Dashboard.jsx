@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useAccount } from 'wagmi';
 import { Link } from 'react-router-dom';
-import { FileText, Users, Shield, Activity, Upload, TrendingUp } from 'lucide-react';
+import { FileText, Users, Shield, Activity, Upload, TrendingUp, Brain } from 'lucide-react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
@@ -141,6 +141,7 @@ export default function PatientDashboard() {
     const quickActions = [
         { name: 'Upload Records', href: '/patient/records', icon: Upload, color: 'primary' },
         { name: 'View Records', href: '/patient/records', icon: FileText, color: 'accent' },
+        { name: 'AI Insights', href: '/patient/insights', icon: Brain, color: 'indigo' },
         { name: 'Manage Access', href: '/patient/access-control', icon: Users, color: 'success' },
     ];
 
@@ -187,7 +188,7 @@ export default function PatientDashboard() {
                     </h2>
                 </div>
                 <div className="card-body">
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                         {quickActions.map((action) => (
                             <Link
                                 key={action.name}

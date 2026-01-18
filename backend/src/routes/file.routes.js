@@ -38,7 +38,7 @@ const upload = multer({
  */
 
 // Upload medical file
-router.post('/upload', upload.single('file'), requireAddress, requirePatient, requirePassword, async (req, res) => {
+router.post('/upload', upload.single('file'), requireAddress, requirePatient, async (req, res) => {
     try {
         if (!req.file) {
             return res.status(400).json({
@@ -48,7 +48,6 @@ router.post('/upload', upload.single('file'), requireAddress, requirePatient, re
         }
 
         const { address } = req.user;
-        const { password } = req;
         const { category } = req.body;
 
         // Validate category
@@ -79,7 +78,6 @@ router.post('/upload', upload.single('file'), requireAddress, requirePatient, re
         const result = await fileHandlerService.uploadMedicalFile(
             req.file.buffer,
             address,
-            password,
             category,
             req.file.originalname,
             fileType,
@@ -114,11 +112,10 @@ router.post('/upload', upload.single('file'), requireAddress, requirePatient, re
 });
 
 // Download medical file
-router.post('/download/:cid', requireAddress, requirePassword, async (req, res) => {
+router.post('/download/:cid', requireAddress, async (req, res) => {
     try {
         const { cid } = req.params;
         const { address } = req.user;
-        const { password } = req;
         const { patientAddress } = req.body;
 
         if (!patientAddress) {
@@ -148,7 +145,6 @@ router.post('/download/:cid', requireAddress, requirePassword, async (req, res) 
         const decryptedFile = await fileHandlerService.retrieveMedicalFile(
             cid,
             patientAddress,
-            password,
             doctorAddress
         );
 

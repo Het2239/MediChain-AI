@@ -9,7 +9,6 @@ const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
 export default function FileUploadModal({ isOpen, onClose, onSuccess, patientAddress }) {
     const [selectedFile, setSelectedFile] = useState(null);
     const [category, setCategory] = useState('reports');
-    const [password, setPassword] = useState('');
     const [uploading, setUploading] = useState(false);
 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -36,16 +35,6 @@ export default function FileUploadModal({ isOpen, onClose, onSuccess, patientAdd
             return;
         }
 
-        if (!password) {
-            toast.error('Please enter an encryption password');
-            return;
-        }
-
-        if (password.length < 8) {
-            toast.error('Password must be at least 8 characters');
-            return;
-        }
-
         try {
             setUploading(true);
 
@@ -56,14 +45,12 @@ export default function FileUploadModal({ isOpen, onClose, onSuccess, patientAdd
             const response = await axios.post(`${API_URL}/file/upload`, formData, {
                 headers: {
                     'X-Wallet-Address': patientAddress,
-                    'X-Password': password,
                     'Content-Type': 'multipart/form-data'
                 }
             });
 
             toast.success('File uploaded successfully!');
             setSelectedFile(null);
-            setPassword('');
             onSuccess && onSuccess(response.data);
             onClose();
         } catch (error) {
@@ -111,8 +98,8 @@ export default function FileUploadModal({ isOpen, onClose, onSuccess, patientAdd
                         <div
                             {...getRootProps()}
                             className={`border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-colors ${isDragActive
-                                    ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-900/20'
-                                    : 'border-gray-300 dark:border-gray-600 hover:border-indigo-400'
+                                ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-900/20'
+                                : 'border-gray-300 dark:border-gray-600 hover:border-indigo-400'
                                 }`}
                         >
                             <input {...getInputProps()} />
@@ -167,26 +154,6 @@ export default function FileUploadModal({ isOpen, onClose, onSuccess, patientAdd
                         </select>
                     </div>
 
-                    {/* Password Input */}
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                            Encryption Password
-                        </label>
-                        <div className="relative">
-                            <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-                            <input
-                                type="password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                placeholder="Enter password to encrypt file"
-                                className="input pl-10"
-                            />
-                        </div>
-                        <p className="text-xs text-gray-500 mt-1">
-                            This password will be required to decrypt and view the file. Keep it safe!
-                        </p>
-                    </div>
-
                     {/* Security Info */}
                     <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
                         <div className="flex items-start space-x-3">
@@ -194,10 +161,10 @@ export default function FileUploadModal({ isOpen, onClose, onSuccess, patientAdd
                             <div className="text-sm text-blue-800 dark:text-blue-300">
                                 <p className="font-medium mb-1">Secure Upload Process:</p>
                                 <ul className="space-y-1 text-xs">
-                                    <li>• File encrypted locally with AES-256</li>
+                                    <li>• File encrypted with AES-256</li>
                                     <li>• Stored on decentralized IPFS network</li>
                                     <li>• Metadata recorded on blockchain</li>
-                                    <li>• Only you control access permissions</li>
+                                    <li>• Only authorized users can access</li>
                                 </ul>
                             </div>
                         </div>
@@ -215,7 +182,7 @@ export default function FileUploadModal({ isOpen, onClose, onSuccess, patientAdd
                     </button>
                     <button
                         onClick={handleUpload}
-                        disabled={!selectedFile || !password || uploading}
+                        disabled={!selectedFile || uploading}
                         className="btn btn-primary flex items-center space-x-2"
                     >
                         {uploading ? (

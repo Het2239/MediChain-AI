@@ -163,6 +163,33 @@ function splitEncryptedData(combinedBuffer) {
 }
 
 /**
+ * Encrypt file with wallet address only (no user password required)
+ * Uses a fixed internal password for key derivation
+ * @param {Buffer} buffer - File data to encrypt
+ * @param {string} walletAddress - Patient's wallet address
+ * @returns {Object} - { encryptedData: Buffer, iv: Buffer }
+ */
+function encryptWithWallet(buffer, walletAddress) {
+    // Use fixed internal password for encryption
+    const FIXED_PASSWORD = 'medichain-encryption-key-v1';
+    return encryptWithPassword(buffer, walletAddress, FIXED_PASSWORD);
+}
+
+/**
+ * Decrypt file with wallet address only (no user password required)
+ * Uses a fixed internal password for key derivation
+ * @param {Buffer} encryptedData - Encrypted file data
+ * @param {string} walletAddress - Patient's wallet address
+ * @param {Buffer} iv - Initialization vector
+ * @returns {Buffer} - Decrypted file data
+ */
+function decryptWithWallet(encryptedData, walletAddress, iv) {
+    // Use fixed internal password for decryption
+    const FIXED_PASSWORD = 'medichain-encryption-key-v1';
+    return decryptWithPassword(encryptedData, walletAddress, FIXED_PASSWORD, iv);
+}
+
+/**
  * Hash password for storage (not used for encryption)
  * @param {string} password - Password to hash
  * @returns {string} - Hashed password
@@ -180,6 +207,8 @@ module.exports = {
     decryptFile,
     encryptWithPassword,
     decryptWithPassword,
+    encryptWithWallet,
+    decryptWithWallet,
     combineEncryptedData,
     splitEncryptedData,
     hashPassword,

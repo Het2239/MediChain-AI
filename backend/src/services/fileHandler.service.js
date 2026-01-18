@@ -15,7 +15,6 @@ class FileHandlerService {
      * Upload and encrypt medical file
      * @param {Buffer} fileBuffer - File data
      * @param {string} patientAddress - Patient's wallet address
-     * @param {string} password - Patient's password
      * @param {string} category - File category (reports/prescriptions/scans)
      * @param {string} filename - Original filename
      * @param {string} fileType - File extension (pdf, docx, jpg, etc.)
@@ -25,7 +24,6 @@ class FileHandlerService {
     async uploadMedicalFile(
         fileBuffer,
         patientAddress,
-        password,
         category,
         filename,
         fileType,
@@ -36,10 +34,9 @@ class FileHandlerService {
 
             // Step 1: Encrypt file
             console.log('1️⃣  Encrypting file...');
-            const { encryptedData, iv } = encryptionService.encryptWithPassword(
+            const { encryptedData, iv } = encryptionService.encryptWithWallet(
                 fileBuffer,
-                patientAddress,
-                password
+                patientAddress
             );
 
             // Combine IV and encrypted data for storage
@@ -91,11 +88,10 @@ class FileHandlerService {
      * Retrieve and decrypt medical file
      * @param {string} cid - IPFS Content Identifier
      * @param {string} patientAddress - Patient's wallet address
-     * @param {string} password - Patient's password
      * @param {string} doctorAddress - Doctor's wallet address (optional, for access logging)
      * @returns {Promise<Buffer>} - Decrypted file data
      */
-    async retrieveMedicalFile(cid, patientAddress, password, doctorAddress = null) {
+    async retrieveMedicalFile(cid, patientAddress, doctorAddress = null) {
         try {
             console.log(`\n🔓 Starting encrypted retrieval for CID: ${cid}...`);
 
@@ -123,10 +119,9 @@ class FileHandlerService {
 
             // Step 4: Decrypt file
             console.log('3️⃣  Decrypting file...');
-            const decryptedData = encryptionService.decryptWithPassword(
+            const decryptedData = encryptionService.decryptWithWallet(
                 encryptedData,
                 patientAddress,
-                password,
                 iv
             );
             console.log(`   ✅ File decrypted (${decryptedData.length} bytes)`);

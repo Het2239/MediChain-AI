@@ -6,16 +6,9 @@ import toast from 'react-hot-toast';
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
 
 export default function FileDownloadModal({ isOpen, onClose, file, patientAddress, userAddress }) {
-    const [password, setPassword] = useState('');
-    const [showPassword, setShowPassword] = useState(false);
     const [downloading, setDownloading] = useState(false);
 
     const handleDownload = async () => {
-        if (!password) {
-            toast.error('Please enter the decryption password');
-            return;
-        }
-
         try {
             setDownloading(true);
 
@@ -24,8 +17,7 @@ export default function FileDownloadModal({ isOpen, onClose, file, patientAddres
                 { patientAddress },
                 {
                     headers: {
-                        'X-Wallet-Address': userAddress,
-                        'X-Password': password
+                        'X-Wallet-Address': userAddress
                     },
                     responseType: 'blob'
                 }
@@ -42,12 +34,11 @@ export default function FileDownloadModal({ isOpen, onClose, file, patientAddres
             window.URL.revokeObjectURL(url);
 
             toast.success('File downloaded successfully!');
-            setPassword('');
             onClose();
         } catch (error) {
             console.error('Download error:', error);
             if (error.response?.status === 403) {
-                toast.error('Access denied or incorrect password');
+                toast.error('Access denied');
             } else {
                 toast.error(error.response?.data?.message || 'Download failed');
             }
@@ -95,38 +86,10 @@ export default function FileDownloadModal({ isOpen, onClose, file, patientAddres
                         </div>
                     </div>
 
-                    {/* Password Input */}
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                            Decryption Password
-                        </label>
-                        <div className="relative">
-                            <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-                            <input
-                                type={showPassword ? 'text' : 'password'}
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                onKeyPress={(e) => e.key === 'Enter' && handleDownload()}
-                                placeholder="Enter password to decrypt file"
-                                className="input pl-10 pr-10"
-                            />
-                            <button
-                                type="button"
-                                onClick={() => setShowPassword(!showPassword)}
-                                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                            >
-                                {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
-                            </button>
-                        </div>
-                        <p className="text-xs text-gray-500 mt-1">
-                            Enter the password used when uploading this file
-                        </p>
-                    </div>
-
-                    {/* Warning */}
-                    <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-3">
-                        <p className="text-xs text-amber-800 dark:text-amber-300">
-                            ⚠️ This file will be decrypted on your device. Make sure you're on a secure connection.
+                    {/* Info Message */}
+                    <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-3">
+                        <p className="text-xs text-blue-800 dark:text-blue-300">
+                            ✔️ This file will be decrypted automatically and downloaded to your device.
                         </p>
                     </div>
                 </div>
@@ -142,7 +105,7 @@ export default function FileDownloadModal({ isOpen, onClose, file, patientAddres
                     </button>
                     <button
                         onClick={handleDownload}
-                        disabled={!password || downloading}
+                        disabled={downloading}
                         className="btn btn-primary flex items-center space-x-2"
                     >
                         {downloading ? (

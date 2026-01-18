@@ -10,6 +10,7 @@ const patientRoutes = require('./routes/patient.routes');
 const doctorRoutes = require('./routes/doctor.routes');
 const adminRoutes = require('./routes/admin.routes');
 const fileRoutes = require('./routes/file.routes');
+const insightsRoutes = require('./routes/insights.routes');
 
 // Initialize Express app
 const app = express();
@@ -61,6 +62,7 @@ app.use('/api/patient', patientRoutes);
 app.use('/api/doctor', doctorRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/file', fileRoutes);
+app.use('/api/insights', insightsRoutes);
 
 // 404 handler
 app.use((req, res) => {
@@ -98,6 +100,7 @@ app.listen(PORT, () => {
     console.log('   Doctor:   /api/doctor/*');
     console.log('   Admin:    /api/admin/*');
     console.log('   Files:    /api/file/*');
+    console.log('   Insights: /api/insights/*');
     console.log('\n' + '='.repeat(60) + '\n');
 });
 
