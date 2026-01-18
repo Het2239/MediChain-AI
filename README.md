@@ -11,6 +11,9 @@
 
 > *A secure, decentralized medical record exchange platform that leverages Blockchain for immutable access control and Generative AI (Gemini 2.5) for intelligent health insights, predictive analytics, and automated clinical summaries.*
 
+### ▶️ Demo Video  
+[![Watch the video](https://i.ytimg.com/vi/1RXNAA9KE94/hqdefault.jpg)](https://youtu.be/1RXNAA9KE94)
+
 
 ---
 
