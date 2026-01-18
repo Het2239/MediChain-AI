@@ -2,21 +2,142 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ============================================
+   OPELLA-INSPIRED DESIGN SYSTEM
+   Colors: Dark Green (#042B0B) & Warm Beige (#F7EFE6)
+   ============================================ */
+
 @layer base {
+  :root {
+    /* Opella Color Palette */
+    --opella-dark: #042B0B;
+    --opella-light: #F7EFE6;
+    --opella-dark-rgb: 4, 43, 11;
+    --opella-light-rgb: 247, 239, 230;
+
+    /* Text colors - Maximum contrast */
+    --text-on-light: #001A05;
+    /* Even darker for better visibility */
+    --text-on-dark: #FFFFFF;
+    /* Pure white for dark backgrounds */
+
+    /* Gradients */
+    --gradient-dark: linear-gradient(135deg, #042B0B 0%, #063618 100%);
+    --gradient-light: linear-gradient(135deg, #F7EFE6 0%, #FFFDF9 100%);
+
+    /* Typography */
+    --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-weight-normal: 400;
+    --font-weight-bold: 700;
+
+    /* Spacing */
+    --spacing-unit: 8px;
+    --section-padding-y: 80px;
+    --section-padding-x: 24px;
+
+    /* Borders */
+    --border-thin: 0.8px solid;
+    --border-radius-sm: 4px;
+    --border-radius-md: 8px;
+    --border-radius-lg: 12px;
+
+    /* Transitions */
+    --transition-base: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-fast: all 0.15s ease;
+  }
+
   body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-family: var(--font-family);
+    font-weight: var(--font-weight-normal);
+    line-height: 1.6;
+    color: #001A05;
+    /* Very dark for maximum contrast */
+    background-color: var(--opella-light);
+  }
+
+  /* Dark mode uses pure white text */
+  .dark body {
+    background-color: var(--opella-dark);
+    color: #FFFFFF;
+  }
+
+  /* Typography Scale - Opella Style */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-weight: var(--font-weight-bold);
+    line-height: 1.1;
+  }
+
+  h1 {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+  }
+
+  h2 {
+    font-size: clamp(2rem, 4vw, 3.5rem);
+  }
+
+  h3 {
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+  }
+
+  h4 {
+    font-size: clamp(1.25rem, 2.5vw, 2rem);
+  }
+
+  p {
+    font-size: 1rem;
+    line-height: 1.6;
   }
 }
 
 @layer components {
 
-  /* Card Components */
+  /* ===== SECTION COMPONENTS (Opella Full-Width Style) ===== */
+  .section {
+    width: 100%;
+    padding: var(--section-padding-y) var(--section-padding-x);
+    min-height: 50vh;
+    transition: var(--transition-base);
+  }
+
+  .section-dark {
+    background-color: var(--opella-dark);
+    color: var(--opella-light);
+  }
+
+  .section-light {
+    background-color: var(--opella-light);
+    color: var(--opella-dark);
+  }
+
+  .section-gradient-dark {
+    background: var(--gradient-dark);
+    color: var(--opella-light);
+  }
+
+  .section-gradient-light {
+    background: var(--gradient-light);
+    color: var(--opella-dark);
+  }
+
   .card {
-    @apply bg-white dark:bg-gray-800 rounded-lg shadow-md border border-gray-200 dark:border-gray-700;
+    @apply bg-white dark:bg-[#042B0B] rounded-lg border border-gray-200/50 dark:border-[#F7EFE6]/10 shadow-sm hover:shadow-md transition-all duration-300;
+  }
+
+  .card-dark {
+    @apply bg-[#042B0B] text-[#F7EFE6] border-2 border-[#F7EFE6]/30 shadow-md hover:shadow-lg hover:scale-[1.02] transition-all duration-300;
+  }
+
+  .card-light {
+    @apply bg-[#F7EFE6] text-[#042B0B] border-2 border-[#042B0B]/30 rounded-lg shadow-md hover:shadow-lg hover:scale-[1.01] transition-all duration-300;
   }
 
   .card-header {
-    @apply px-6 py-4 border-b border-gray-200 dark:border-gray-700;
+    @apply px-6 py-4 border-b border-gray-200/50 dark:border-[#F7EFE6]/10;
   }
 
   .card-body {
@@ -24,120 +145,157 @@
   }
 
   .card-footer {
-    @apply px-6 py-4 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/50;
+    @apply px-6 py-4 border-t border-gray-200/50 dark:border-[#F7EFE6]/10;
   }
 
-  /* Button Variants */
+  /* ===== BUTTON COMPONENTS (Opella Transparent Style) ===== */
   .btn {
-    @apply px-4 py-2 rounded-lg font-medium transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed;
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2 font-normal text-base border border-current rounded-[4px] bg-transparent transition-all duration-300 ease-out disabled:opacity-50 disabled:cursor-not-allowed hover:translate-x-1;
   }
 
   .btn-primary {
-    @apply bg-indigo-600 hover:bg-indigo-700 text-white shadow-sm hover:shadow-md;
+    @apply text-[#F7EFE6] border-[#F7EFE6] hover:bg-[#F7EFE6]/10;
   }
 
   .btn-secondary {
-    @apply bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-900 dark:text-white;
+    @apply text-[#042B0B] border-[#042B0B] hover:bg-[#042B0B]/5;
   }
 
-  .btn-success {
-    @apply bg-green-600 hover:bg-green-700 text-white;
+  .btn-dark {
+    @apply text-[#042B0B] border-[#042B0B] hover:bg-[#042B0B]/10;
   }
 
-  .btn-danger {
-    @apply bg-red-600 hover:bg-red-700 text-white;
-  }
-
-  .btn-outline {
-    @apply border-2 border-indigo-600 text-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-900/20;
+  .btn-light {
+    @apply text-[#F7EFE6] border-[#F7EFE6] hover:bg-[#F7EFE6]/10;
   }
 
   .btn-sm {
-    @apply px-3 py-1.5 text-sm;
+    @apply px-4 py-1.5 text-sm;
   }
 
-  /* Input Fields */
+  .btn-lg {
+    @apply px-6 py-3 text-lg;
+  }
+
+  /* ===== INPUT FIELDS (Clean Opella Style) ===== */
   .input {
-    @apply w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all;
+    @apply w-full px-4 py-3 rounded-[4px] border border-gray-300 dark:border-[#F7EFE6]/20 bg-white dark:bg-[#042B0B]/50 text-[#042B0B] dark:text-[#F7EFE6] placeholder:text-gray-400 dark:placeholder:text-[#F7EFE6]/40 focus:outline-none focus:ring-1 focus:ring-[#042B0B] dark:focus:ring-[#F7EFE6] transition-all duration-200;
   }
 
   .input-error {
     @apply border-red-500 focus:ring-red-500;
   }
 
-  /* Badge */
+  .textarea {
+    @apply input resize-none;
+  }
+
+  .select {
+    @apply input;
+  }
+
+  /* ===== BADGES (Pill Style) ===== */
   .badge {
-    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium border;
   }
 
   .badge-success {
-    @apply bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400;
+    @apply bg-green-50 text-green-700 border-green-200 dark:bg-green-900/30 dark:text-green-400 dark:border-green-700/30;
   }
 
   .badge-warning {
-    @apply bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-400;
+    @apply bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-900/30 dark:text-amber-400 dark:border-amber-700/30;
   }
 
   .badge-danger {
-    @apply bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400;
+    @apply bg-red-50 text-red-700 border-red-200 dark:bg-red-900/30 dark:text-red-400 dark:border-red-700/30;
   }
 
   .badge-info {
-    @apply bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400;
+    @apply bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-900/30 dark:text-blue-400 dark:border-blue-700/30;
   }
 
-  /* Stats Card */
+  .badge-primary {
+    @apply bg-[#042B0B]/10 text-[#042B0B] border-[#042B0B]/20 dark:bg-[#F7EFE6]/10 dark:text-[#F7EFE6] dark:border-[#F7EFE6]/20;
+  }
+
+  .badge-secondary {
+    @apply bg-gray-100 text-gray-700 border-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700;
+  }
+
+  /* ===== STAT CARDS ===== */
   .stat-card {
-    @apply card p-6 hover:shadow-lg transition-shadow;
+    @apply card p-6 hover:border-[#042B0B]/30 dark:hover:border-[#F7EFE6]/30 transition-all;
   }
 
   .stat-value {
-    @apply text-3xl font-bold text-gray-900 dark:text-white;
+    @apply text-4xl font-bold text-[#042B0B] dark:text-[#F7EFE6];
   }
 
   .stat-label {
-    @apply text-sm font-medium text-gray-600 dark:text-gray-400 mt-1;
+    @apply text-sm font-medium text-gray-600 dark:text-[#F7EFE6]/70 mt-2;
   }
 
-  /* Loading Spinner */
+  /* ===== LOADING SPINNER ===== */
   .spinner {
-    @apply animate-spin rounded-full border-4 border-gray-200 border-t-indigo-600;
+    @apply animate-spin rounded-full border-4 border-[#F7EFE6]/20 border-t-[#042B0B] dark:border-[#042B0B]/20 dark:border-t-[#F7EFE6];
+  }
+
+  /* ===== CONTAINER ===== */
+  .container-opella {
+    @apply max-w-7xl mx-auto px-6 lg:px-8;
   }
 }
 
 @layer utilities {
-  .text-gradient {
-    @apply bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent;
+
+  /* Opella Text Styles */
+  .text-opella-dark {
+    color: var(--opella-dark);
   }
 
-  .glass-effect {
-    @apply bg-white/10 backdrop-blur-md border border-white/20;
+  .text-opella-light {
+    color: var(--opella-light);
+  }
+
+  .bg-opella-dark {
+    background-color: var(--opella-dark);
+  }
+
+  .bg-opella-light {
+    background-color: var(--opella-light);
+  }
+
+  /* Heading with trailing period (Opella signature) */
+  .heading-opella::after {
+    content: '.';
+  }
+
+  /* Generous spacing (Opella style) */
+  .spacing-generous {
+    @apply space-y-12 md:space-y-16 lg:space-y-20;
   }
 }
 
-/* Custom Scrollbar */
+/* ===== CUSTOM SCROLLBAR (Opella Colors) ===== */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-gray-100 dark:bg-gray-800;
+  @apply bg-[#F7EFE6] dark:bg-[#042B0B];
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-gray-400 dark:bg-gray-600 rounded-full;
+  @apply bg-[#042B0B]/30 dark:bg-[#F7EFE6]/30 rounded-full hover:bg-[#042B0B]/50 dark:hover:bg-[#F7EFE6]/50;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  @apply bg-gray-500 dark:bg-gray-500;
-}
-
-/* Animations */
-@keyframes slideIn {
+/* ===== SCROLL REVEAL ANIMATIONS (Opella Style) ===== */
+@keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(-10px);
+    transform: translateY(30px);
   }
 
   to {
@@ -146,13 +304,85 @@
   }
 }
 
-.animate-slide-in {
-  animation: slideIn 0.2s ease-out;
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
-/* Medical theme accents */
-.medical-gradient {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+.animate-slide-in-right {
+  animation: slideInRight 0.5s ease-out forwards;
+}
+
+/* Stagger animation delays for list items */
+.stagger-animation>* {
+  opacity: 0;
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.stagger-animation>*:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.stagger-animation>*:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.stagger-animation>*:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.stagger-animation>*:nth-child(4) {
+  animation-delay: 0.4s;
+}
+
+.stagger-animation>*:nth-child(5) {
+  animation-delay: 0.5s;
+}
+
+.stagger-animation>*:nth-child(6) {
+  animation-delay: 0.6s;
+}
+
+/* Intersection Observer classes for scroll reveals */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===== MEDICAL/HEALTH THEME ACCENTS ===== */
+.medical-gradient-opella {
+  background: linear-gradient(135deg, #042B0B 0%, #0A5020 50%, #042B0B 100%);
 }
 
 .heartbeat {
@@ -169,4 +399,38 @@
   50% {
     transform: scale(1.05);
   }
+}
+
+/* ===== HOVER EFFECTS (Opella Style) ===== */
+.hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+}
+
+/* ===== GLASS EFFECT (Subtle) ===== */
+.glass-effect-opella {
+  @apply bg-white/5 backdrop-blur-sm border border-white/10;
+}
+
+/* ===== RESPONSIVE TYPOGRAPHY ===== */
+@media (max-width: 640px) {
+  .section {
+    padding: 60px 16px;
+  }
+}
+
+/* ===== DARK MODE SPECIFIC ADJUSTMENTS ===== */
+.dark {
+  color-scheme: dark;
+}
+
+.dark .shadow-md {
+  box-shadow: 0 4px 6px -1px rgba(247, 239, 230, 0.05), 0 2px 4px -1px rgba(247, 239, 230, 0.03);
+}
+
+.dark .shadow-lg {
+  box-shadow: 0 10px 15px -3px rgba(247, 239, 230, 0.08), 0 4px 6px -2px rgba(247, 239, 230, 0.04);
 }

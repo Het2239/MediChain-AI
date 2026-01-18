@@ -4,20 +4,16 @@ export default {
         "./index.html",
         "./src/**/*.{js,ts,jsx,tsx}",
     ],
+    darkMode: 'class',
     theme: {
         extend: {
             colors: {
-                primary: {
-                    50: '#f0f9ff',
-                    100: '#e0f2fe',
-                    200: '#bae6fd',
-                    300: '#7dd3fc',
-                    400: '#38bdf8',
-                    500: '#0ea5e9',
-                    600: '#0284c7',
-                    700: '#0369a1',
-                    800: '#075985',
-                    900: '#0c4a6e',
+                // Opella Color Palette
+                opella: {
+                    dark: '#042B0B',
+                    light: '#F7EFE6',
+                    'dark-hover': '#063618',
+                    'light-hover': '#FFFDF9',
                 },
                 medical: {
                     red: '#ef4444',
@@ -27,10 +23,29 @@ export default {
                 },
             },
             fontFamily: {
-                sans: ['Inter', 'system-ui', 'sans-serif'],
+                sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],
+            },
+            animation: {
+                'fade-in-up': 'fadeInUp 0.6s ease-out forwards',
+                'fade-in': 'fadeIn 0.6s ease-out forwards',
+                'slide-in-right': 'slideInRight 0.5s ease-out forwards',
+            },
+            keyframes: {
+                fadeInUp: {
+                    '0%': { opacity: '0', transform: 'translateY(30px)' },
+                    '100%': { opacity: '1', transform: 'translateY(0)' },
+                },
+                fadeIn: {
+                    '0%': { opacity: '0' },
+                    '100%': { opacity: '1' },
+                },
+                slideInRight: {
+                    '0%': { opacity: '0', transform: 'translateX(-20px)' },
+                    '100%': { opacity: '1', transform: 'translateX(0)' },
+                },
             },
             boxShadow: {
-                'medical': '0 4px 6px -1px rgba(14, 165, 233, 0.1), 0 2px 4px -1px rgba(14, 165, 233, 0.06)',
+                'opella': '0 4px 6px -1px rgba(4, 43, 11, 0.1), 0 2px 4px -1px rgba(4, 43, 11, 0.06)',
             },
         },
     },

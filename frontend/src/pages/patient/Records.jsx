@@ -81,7 +81,7 @@ export default function PatientRecords() {
             const deletedFiles = JSON.parse(localStorage.getItem('deletedFiles') || '[]');
             if (!deletedFiles.includes(record.cid)) {
                 deletedFiles.push(record.cid);
-                localStorage.setItem('deletedFiles', JSON.stringify(deletedFiles));
+                localStorage.setItem('deleted Files', JSON.stringify(deletedFiles));
             }
 
             // Remove from localStorage custom names
@@ -112,145 +112,134 @@ export default function PatientRecords() {
         return colors[category] || 'badge-info';
     };
 
-    const getCategoryColor = (category) => {
-        const colors = {
-            reports: 'text-blue-600 dark:text-blue-400 bg-blue-100 dark:bg-blue-900/30',
-            prescriptions: 'text-green-600 dark:text-green-400 bg-green-100 dark:bg-green-900/30',
-            scans: 'text-amber-600 dark:text-amber-400 bg-amber-100 dark:bg-amber-900/30'
-        };
-        return colors[category] || 'text-blue-600 dark:text-blue-400 bg-blue-100 dark:bg-blue-900/30';
-    };
-
     return (
-        <div className="space-y-6">
-            {/* Header */}
-            <div className="flex justify-between items-center">
-                <div>
-                    <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-                        Medical Records
-                    </h1>
-                    <p className="mt-1 text-gray-600 dark:text-gray-400">
-                        {records.length} record{records.length !== 1 ? 's' : ''} stored securely
-                    </p>
-                </div>
-                <button
-                    onClick={() => setUploadModalOpen(true)}
-                    className="btn btn-primary flex items-center space-x-2"
-                >
-                    <Upload className="w-4 h-4" />
-                    <span>Upload Record</span>
-                </button>
-            </div>
-
-            {/* Filters */}
-            <div className="card">
-                <div className="card-body">
-                    <div className="flex items-center space-x-2 overflow-x-auto">
-                        <Filter className="w-5 h-5 text-gray-500 flex-shrink-0" />
-                        <span className="text-sm font-medium text-gray-700 dark:text-gray-300 flex-shrink-0">
-                            Filter:
-                        </span>
-                        <div className="flex space-x-2">
-                            {categories.map((cat) => (
-                                <button
-                                    key={cat.value}
-                                    onClick={() => setSelectedCategory(cat.value)}
-                                    className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all whitespace-nowrap flex items-center space-x-1.5 ${selectedCategory === cat.value
-                                        ? 'bg-indigo-600 text-white shadow-sm'
-                                        : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'
-                                        }`}
-                                >
-                                    <cat.icon className="w-4 h-4" />
-                                    <span>{cat.label}</span>
-                                </button>
-                            ))}
+        <div className="w-full">
+            <div className="section section-light">
+                <div className="container-opella space-y-8">
+                    {/* Header - Opella Style */}
+                    <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                        <div>
+                            <h1 className="heading-opella text-3xl md:text-4xl font-bold text-[#001A05]">
+                                Medical Records
+                            </h1>
+                            <p className="mt-3 text-lg text-[#001A05]/80">
+                                {records.length} record{records.length !== 1 ? 's' : ''} stored securely
+                            </p>
                         </div>
-                    </div>
-                </div>
-            </div>
-
-            {/* Records List */}
-            {loading ? (
-                <div className="flex justify-center py-12">
-                    <div className="spinner w-10 h-10"></div>
-                </div>
-            ) : records.length === 0 ? (
-                <div className="card">
-                    <div className="card-body text-center py-12">
-                        <FileText className="w-16 h-16 text-gray-300 dark:text-gray-600 mx-auto mb-4" />
-                        <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
-                            No Records Found
-                        </h3>
-                        <p className="text-gray-600 dark:text-gray-400 mb-4">
-                            {selectedCategory === 'all'
-                                ? 'Upload your first medical record to get started'
-                                : `No records in the ${selectedCategory} category`}
-                        </p>
                         <button
                             onClick={() => setUploadModalOpen(true)}
-                            className="btn btn-primary"
+                            className="btn bg-[#042B0B] text-[#F7EFE6] border-[#F7EFE6] hover:bg-[#042B0B]/90 flex items-center space-x-2"
                         >
-                            Upload Record
+                            <Upload className="w-4 h-4" />
+                            <span>Upload Record</span>
                         </button>
                     </div>
-                </div>
-            ) : (
-                <div className="grid gap-4">
-                    {records.map((record, index) => (
-                        <div key={index} className="card hover:shadow-lg transition-shadow">
-                            <div className="card-body">
-                                <div className="flex items-center justify-between">
-                                    <div className="flex items-center space-x-4 flex-1">
-                                        <div className={`w-12 h-12 rounded-lg flex items-center justify-center ${getCategoryColor(record.category)}`}>
-                                            <FileText className="w-6 h-6" />
-                                        </div>
-                                        <div className="flex-1 min-w-0">
-                                            <div className="flex items-center space-x-2 mb-1">
-                                                <h3 className="font-semibold text-gray-900 dark:text-white">
-                                                    {record.metadata?.filename || `Untitled ${record.fileType.toUpperCase()} File`}
-                                                </h3>
-                                                <span className={`badge ${getCategoryBadge(record.category)}`}>
-                                                    {record.category}
-                                                </span>
-                                            </div>
-                                            <p className="text-sm text-gray-600 dark:text-gray-400">
-                                                Uploaded {new Date(record.timestampDate).toLocaleString()}
-                                            </p>
-                                            <p className="text-xs text-gray-500 dark:text-gray-500 font-mono mt-1 truncate">
-                                                CID: {record.cid}
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div className="flex space-x-2 ml-4">
-                                        <button
-                                            onClick={() => handleRenameClick(record)}
-                                            className="btn btn-secondary btn-sm flex items-center space-x-1"
-                                            title="Rename File"
-                                        >
-                                            <Edit2 className="w-4 h-4" />
-                                        </button>
-                                        <button
-                                            onClick={() => handleDownloadClick(record)}
-                                            className="btn btn-primary btn-sm flex items-center space-x-1"
-                                            title="Download & Decrypt"
-                                        >
-                                            <Download className="w-4 h-4" />
-                                            <span>Download</span>
-                                        </button>
-                                        <button
-                                            onClick={() => handleDeleteClick(record)}
-                                            className="btn btn-danger btn-sm flex items-center space-x-1"
-                                            title="Delete File"
-                                        >
-                                            <Trash2 className="w-4 h-4" />
-                                        </button>
-                                    </div>
-                                </div>
+
+                    {/* Filters - Opella Clean Style */}
+                    <div className="card-light p-6">
+                        <div className="flex items-center space-x-3 flex-wrap gap-2">
+                            <Filter className="w-5 h-5 text-[#001A05] flex-shrink-0" />
+                            <span className="text-sm font-semibold text-[#001A05] flex-shrink-0">
+                                Filter:
+                            </span>
+                            <div className="flex flex-wrap gap-2">
+                                {categories.map((cat) => (
+                                    <button
+                                        key={cat.value}
+                                        onClick={() => setSelectedCategory(cat.value)}
+                                        className={`px-4 py-2 rounded-[4px] text-sm font-medium transition-all flex items-center space-x-2 ${selectedCategory === cat.value
+                                            ? 'bg-[#042B0B] text-[#F7EFE6] shadow-md'
+                                            : 'bg-[#042B0B]/10 text-[#001A05] hover:bg-[#042B0B]/20'
+                                            }`}
+                                    >
+                                        <cat.icon className="w-4 h-4" />
+                                        <span>{cat.label}</span>
+                                    </button>
+                                ))}
                             </div>
                         </div>
-                    ))}
+                    </div>
+
+                    {/* Records List */}
+                    {loading ? (
+                        <div className="flex justify-center py-20">
+                            <div className="spinner w-12 h-12"></div>
+                        </div>
+                    ) : records.length === 0 ? (
+                        <div className="card-light p-12 text-center">
+                            <FileText className="w-20 h-20 text-[#001A05]/20 mx-auto mb-4" />
+                            <h3 className="text-xl font-bold text-[#001A05] mb-2">
+                                No Records Found
+                            </h3>
+                            <p className="text-[#001A05]/70 mb-6">
+                                {selectedCategory === 'all'
+                                    ? 'Upload your first medical record to get started'
+                                    : `No records in the ${selectedCategory} category`}
+                            </p>
+                            <button
+                                onClick={() => setUploadModalOpen(true)}
+                                className="btn bg-[#042B0B] text-[#F7EFE6] border-[#F7EFE6] hover:bg-[#042B0B]/90"
+                            >
+                                Upload Record
+                            </button>
+                        </div>
+                    ) : (
+                        <div className="space-y-3">
+                            {records.map((record, index) => (
+                                <div key={index} className="card-light p-6">
+                                    <div className="flex items-center justify-between flex-wrap gap-4">
+                                        <div className="flex items-center space-x-4 flex-1 min-w-0">
+                                            <div className="w-12 h-12 bg-[#042B0B] rounded-lg flex items-center justify-center flex-shrink-0">
+                                                <FileText className="w-6 h-6 text-[#F7EFE6]" />
+                                            </div>
+                                            <div className="flex-1 min-w-0">
+                                                <div className="flex items-center space-x-2 mb-1 flex-wrap">
+                                                    <h3 className="font-bold text-[#001A05] text-lg truncate">
+                                                        {record.metadata?.filename || `Untitled ${record.fileType?.toUpperCase()} File`}
+                                                    </h3>
+                                                    <span className={`badge ${getCategoryBadge(record.category)}`}>
+                                                        {record.category}
+                                                    </span>
+                                                </div>
+                                                <p className="text-sm text-[#001A05]/70 mb-1">
+                                                    Uploaded {new Date(record.timestampDate).toLocaleString()}
+                                                </p>
+                                                <p className="text-xs text-[#001A05]/50 font-mono truncate">
+                                                    CID: {record.cid}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div className="flex space-x-2 flex-shrink-0">
+                                            <button
+                                                onClick={() => handleRenameClick(record)}
+                                                className="btn btn-sm bg-[#042B0B]/10 text-[#001A05] border-[#042B0B]/20 hover:bg-[#042B0B]/20 flex items-center space-x-1"
+                                                title="Rename File"
+                                            >
+                                                <Edit2 className="w-4 h-4" />
+                                            </button>
+                                            <button
+                                                onClick={() => handleDownloadClick(record)}
+                                                className="btn btn-sm bg-[#042B0B] text-[#F7EFE6] border-[#F7EFE6] hover:bg-[#042B0B]/90 flex items-center space-x-1"
+                                                title="Download & Decrypt"
+                                            >
+                                                <Download className="w-4 h-4" />
+                                                <span>Download</span>
+                                            </button>
+                                            <button
+                                                onClick={() => handleDeleteClick(record)}
+                                                className="btn btn-sm bg-red-600 text-white border-red-700 hover:bg-red-700 flex items-center space-x-1"
+                                                title="Delete File"
+                                            >
+                                                <Trash2 className="w-4 h-4" />
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    )}
                 </div>
-            )}
+            </div>
 
             {/* Modals */}
             <FileUploadModal

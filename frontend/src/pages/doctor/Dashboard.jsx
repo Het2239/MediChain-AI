@@ -74,43 +74,45 @@ export default function DoctorDashboard() {
 
     if (!isConnected) {
         return (
-            <div className="text-center py-16">
-                <Activity className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-                <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-                    Wallet Not Connected
-                </h2>
-                <p className="text-gray-600 dark:text-gray-400">
-                    Please connect your wallet to access the doctor dashboard
-                </p>
+            <div className="section section-light min-h-[60vh] flex items-center justify-center">
+                <div className="text-center space-y-4">
+                    <Activity className="w-20 h-20 text-[#001A05]/30 text-[#001A05]/30 mx-auto" />
+                    <h2 className="text-3xl font-bold text-[#001A05] text-[#001A05]">
+                        Wallet Not Connected
+                    </h2>
+                    <p className="text-[#001A05]/80 text-[#001A05]/80">
+                        Please connect your wallet to access the doctor dashboard
+                    </p>
+                </div>
             </div>
         );
     }
 
     if (loading) {
         return (
-            <div className="flex justify-center items-center py-16">
-                <div className="spinner w-12 h-12"></div>
+            <div className="section section-light min-h-[60vh] flex items-center justify-center">
+                <div className="spinner w-16 h-16"></div>
             </div>
         );
     }
 
     if (!isVerified) {
         return (
-            <div className="max-w-2xl mx-auto text-center py-16">
-                <div className="card p-8">
-                    <Users className="w-16 h-16 text-warning-600 mx-auto mb-4" />
-                    <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+            <div className="section section-light min-h-[60vh] flex items-center justify-center">
+                <div className="card-light p-12 max-w-2xl text-center space-y-6">
+                    <Users className="w-20 h-20 text-[#001A05] text-[#001A05] mx-auto" />
+                    <h2 className="text-3xl font-bold text-[#001A05] text-[#001A05]">
                         Doctor Verification Required
                     </h2>
-                    <p className="text-gray-600 dark:text-gray-400 mb-6">
+                    <p className="text-xl text-[#001A05]/80 text-[#001A05]/80">
                         Your account is not yet verified. Please contact the system administrator
                         to verify your medical license and gain access to the doctor dashboard.
                     </p>
-                    <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 text-left">
-                        <p className="text-sm text-gray-700 dark:text-gray-300">
+                    <div className="bg-opella-dark/5 dark:bg-opella-light/5 rounded-lg p-6 text-left border border-opella-dark/20 dark:border-opella-light/20">
+                        <p className="text-sm text-[#001A05]/80 text-[#001A05]/80">
                             <strong>Your Wallet:</strong>
                         </p>
-                        <p className="font-mono text-sm text-gray-900 dark:text-white mt-1">
+                        <p className="font-mono text-sm text-[#001A05] text-[#001A05] mt-2 break-all">
                             {address}
                         </p>
                     </div>
@@ -120,91 +122,94 @@ export default function DoctorDashboard() {
     }
 
     const statsCards = [
-        { label: 'Authorized Patients', value: stats.authorizedPatients, icon: Users, color: 'primary' },
-        { label: 'Total Requests', value: stats.totalRequests, icon: FileText, color: 'accent' },
-        { label: 'Pending Requests', value: stats.pendingRequests, icon: TrendingUp, color: 'warning' },
+        { label: 'Authorized Patients', value: stats.authorizedPatients, icon: Users },
+        { label: 'Total Requests', value: stats.totalRequests, icon: FileText },
+        { label: 'Pending Requests', value: stats.pendingRequests, icon: TrendingUp },
     ];
 
     return (
-        <div className="space-y-8">
-            <div>
-                <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-                    Doctor Dashboard
-                </h1>
-                <p className="mt-2 text-gray-600 dark:text-gray-400">
-                    Welcome back, Dr. {doctorInfo?.specialty || 'Professional'}
-                </p>
-            </div>
+        <div className="w-full">
+            <div className="section section-light">
+                <div className="container-opella space-y-12">
+                    {/* Page Header - Opella Bold */}
+                    <div className="text-center md:text-left">
+                        <h1 className="heading-opella text-4xl md:text-5xl font-bold text-[#001A05] text-[#001A05]">
+                            Doctor Dashboard
+                        </h1>
+                        <p className="mt-4 text-xl text-[#001A05]/80 text-[#001A05]/80">
+                            Welcome back, Dr. {doctorInfo?.specialty || 'Professional'}
+                        </p>
+                    </div>
 
-            {/* Doctor Info */}
-            {doctorInfo && (
-                <div className="card">
-                    <div className="card-body">
-                        <div className="flex items-center space-x-4">
-                            <div className="w-16 h-16 bg-primary-100 dark:bg-primary-900/30 rounded-full flex items-center justify-center">
-                                <Users className="w-8 h-8 text-primary-600 dark:text-primary-400" />
-                            </div>
-                            <div>
-                                <h3 className="font-semibold text-gray-900 dark:text-white">
-                                    License: {doctorInfo.licenseNumber}
-                                </h3>
-                                <p className="text-gray-600 dark:text-gray-400">
-                                    Specialty: {doctorInfo.specialty || 'General Practice'}
-                                </p>
-                                <p className="text-xs text-gray-500 mt-1">
-                                    Verified {new Date(doctorInfo.verifiedAtDate).toLocaleDateString()}
-                                </p>
+                    {/* Doctor Info - Opella Card */}
+                    {doctorInfo && (
+                        <div className="card-light p-8">
+                            <div className="flex items-center space-x-6">
+                                <div className="w-20 h-20 bg-opella-dark dark:bg-opella-light rounded-full flex items-center justify-center flex-shrink-0">
+                                    <Users className="w-10 h-10 text-white text-[#001A05]" />
+                                </div>
+                                <div>
+                                    <h3 className="text-xl font-bold text-[#001A05] text-[#001A05] mb-1">
+                                        License: {doctorInfo.licenseNumber}
+                                    </h3>
+                                    <p className="text-[#001A05]/80 text-[#001A05]/80">
+                                        Specialty: {doctorInfo.specialty || 'General Practice'}
+                                    </p>
+                                    <p className="text-sm text-[#001A05]/70 text-[#001A05]/70 mt-2">
+                                        Verified {new Date(doctorInfo.verifiedAtDate).toLocaleDateString()}
+                                    </p>
+                                </div>
                             </div>
                         </div>
+                    )}
+
+                    {/* Stats Grid - Opella Clean Cards */}
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        {statsCards.map((stat) => (
+                            <div key={stat.label} className="card-light p-6 text-center space-y-3 hover:border-opella-dark/30 dark:hover:border-opella-light/30 transition-all">
+                                <stat.icon className="w-10 h-10 mx-auto text-[#001A05] text-[#001A05]" />
+                                <div className="text-4xl font-bold text-[#001A05] text-[#001A05]">{stat.value}</div>
+                                <div className="text-sm text-[#001A05]/80 text-[#001A05]/80">{stat.label}</div>
+                            </div>
+                        ))}
                     </div>
-                </div>
-            )}
 
-            {/* Stats */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {statsCards.map((stat) => (
-                    <div key={stat.label} className="stat-card">
-                        <stat.icon className={`w-8 h-8 text-${stat.color}-600 mb-2`} />
-                        <div className="stat-value">{stat.value}</div>
-                        <div className="stat-label">{stat.label}</div>
-                    </div>
-                ))}
-            </div>
+                    {/* Quick Actions - Opella Button Cards */}
+                    <div className="space-y-4">
+                        <h2 className="text-2xl font-bold text-[#001A05] text-[#001A05]">
+                            Quick Actions
+                        </h2>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <Link
+                                to="/doctor/patients"
+                                className="card-light p-8 space-y-4 hover:border-opella-dark/40 dark:hover:border-opella-light/40 transition-all group"
+                            >
+                                <Users className="w-12 h-12 text-[#001A05] text-[#001A05] group-hover:scale-110 transition-transform" />
+                                <div>
+                                    <h3 className="text-xl font-bold text-[#001A05] text-[#001A05] mb-2">
+                                        View Patients
+                                    </h3>
+                                    <p className="text-[#001A05]/80 text-[#001A05]/80">
+                                        Access authorized patient records and request new access
+                                    </p>
+                                </div>
+                            </Link>
 
-            {/* Quick Actions */}
-            <div className="card">
-                <div className="card-header">
-                    <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
-                        Quick Actions
-                    </h2>
-                </div>
-                <div className="card-body">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <Link
-                            to="/doctor/patients"
-                            className="p-6 border-2 border-gray-200 dark:border-gray-700 rounded-lg hover:border-primary-500 hover:shadow-md transition-all group"
-                        >
-                            <Users className="w-8 h-8 text-primary-600 mb-3 group-hover:scale-110 transition-transform" />
-                            <h3 className="font-semibold text-gray-900 dark:text-white group-hover:text-primary-600">
-                                View Patients
-                            </h3>
-                            <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                                Access authorized patient records and request new access
-                            </p>
-                        </Link>
-
-                        <Link
-                            to="/doctor/patients"
-                            className="p-6 border-2 border-gray-200 dark:border-gray-700 rounded-lg hover:border-accent-500 hover:shadow-md transition-all group"
-                        >
-                            <FileText className="w-8 h-8 text-accent-600 mb-3 group-hover:scale-110 transition-transform" />
-                            <h3 className="font-semibold text-gray-900 dark:text-white group-hover:text-accent-600">
-                                Request Access
-                            </h3>
-                            <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                                Submit access requests to view patient medical records
-                            </p>
-                        </Link>
+                            <Link
+                                to="/doctor/patients"
+                                className="card-light p-8 space-y-4 hover:border-opella-dark/40 dark:hover:border-opella-light/40 transition-all group"
+                            >
+                                <FileText className="w-12 h-12 text-[#001A05] text-[#001A05] group-hover:scale-110 transition-transform" />
+                                <div>
+                                    <h3 className="text-xl font-bold text-[#001A05] text-[#001A05] mb-2">
+                                        Request Access
+                                    </h3>
+                                    <p className="text-[#001A05]/80 text-[#001A05]/80">
+                                        Submit access requests to view patient medical records
+                                    </p>
+                                </div>
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -97,7 +97,7 @@ export default function PatientDashboard() {
         return (
             <div className="text-center py-16">
                 <Shield className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-                <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+                <h2 className="text-2xl font-bold text-gray-900 text-[#001A05] mb-2">
                     Wallet Not Connected
                 </h2>
                 <p className="text-gray-600 dark:text-gray-400">
@@ -109,27 +109,27 @@ export default function PatientDashboard() {
 
     if (loading) {
         return (
-            <div className="flex justify-center items-center py-16">
-                <div className="spinner w-12 h-12"></div>
+            <div className="section section-light min-h-[60vh] flex items-center justify-center">
+                <div className="spinner w-16 h-16"></div>
             </div>
         );
     }
 
     if (!isRegistered) {
         return (
-            <div className="max-w-2xl mx-auto text-center py-16">
-                <div className="card p-8">
-                    <Activity className="w-16 h-16 text-primary-600 mx-auto mb-4" />
-                    <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+            <div className="section section-light min-h-[60vh] flex items-center justify-center">
+                <div className="card-light p-12 max-w-2xl text-center space-y-6">
+                    <Activity className="w-20 h-20 text-opella-dark dark:text-opella-light mx-auto" />
+                    <h2 className="text-3xl font-bold text-opella-dark dark:text-opella-light">
                         Register as Patient
                     </h2>
-                    <p className="text-gray-600 dark:text-gray-400 mb-6">
+                    <p className="text-xl text-opella-dark/70 dark:text-opella-light/70">
                         Register your wallet address to start managing your medical records on the blockchain.
                     </p>
                     <button
                         onClick={registerPatient}
                         disabled={loading}
-                        className="btn btn-primary"
+                        className="btn btn-dark dark:btn-light"
                     >
                         {loading ? 'Registering...' : 'Register Now'}
                     </button>
@@ -153,79 +153,75 @@ export default function PatientDashboard() {
     ];
 
     return (
-        <div className="space-y-8">
-            {/* Page Header */}
-            <div>
-                <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-                    Patient Dashboard
-                </h1>
-                <p className="mt-2 text-gray-600 dark:text-gray-400">
-                    Manage your medical records and control access
-                </p>
-            </div>
-
-            {/* Stats Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {statsCards.map((stat) => (
-                    <div key={stat.label} className="stat-card">
-                        <div className="flex items-center justify-between mb-2">
-                            <stat.icon className={`w-8 h-8 text-${stat.color}-600 `} />
-                            {stat.label === 'Pending Requests' && stat.value > 0 && (
-                                <span className="badge badge-warning">{stat.value} new</span>
-                            )}
-                        </div>
-                        <div className="stat-value">{stat.value}</div>
-                        <div className="stat-label">{stat.label}</div>
+        <div className="w-full">
+            <div className="section section-light">
+                <div className="container-opella space-y-12">
+                    {/* Page Header - Opella Bold */}
+                    <div className="text-center md:text-left">
+                        <h1 className="heading-opella text-4xl md:text-5xl font-bold text-[#001A05] text-[#001A05]">
+                            Patient Dashboard
+                        </h1>
+                        <p className="mt-4 text-xl text-[#001A05]/90 text-[#001A05]/90">
+                            Manage your medical records and control access
+                        </p>
                     </div>
-                ))}
-            </div>
 
-            {/* Quick Actions */}
-            <div className="card">
-                <div className="card-header">
-                    <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
-                        Quick Actions
-                    </h2>
-                </div>
-                <div className="card-body">
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                        {quickActions.map((action) => (
-                            <Link
-                                key={action.name}
-                                to={action.href}
-                                className="p-6 border-2 border-gray-200 dark:border-gray-700 rounded-lg hover:border-primary-500 hover:shadow-md transition-all group"
-                            >
-                                <action.icon className={`w-8 h-8 text-${action.color}-600 mb-3 group-hover:scale-110 transition-transform`} />
-                                <h3 className="font-semibold text-gray-900 dark:text-white group-hover:text-primary-600">
-                                    {action.name}
-                                </h3>
-                            </Link>
+                    {/* Stats Grid - Opella Clean Cards */}
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                        {statsCards.map((stat) => (
+                            <div key={stat.label} className="card-light p-6 text-center space-y-3 hover:border-opella-dark/30 dark:hover:border-opella-light/30 transition-all">
+                                <stat.icon className="w-10 h-10 mx-auto text-[#001A05] text-[#001A05]" />
+                                {stat.label === 'Pending Requests' && stat.value > 0 && (
+                                    <span className="badge badge-warning">{stat.value} new</span>
+                                )}
+                                <div className="text-4xl font-bold text-[#001A05] text-[#001A05]">{stat.value}</div>
+                                <div className="text-sm text-[#001A05]/80 text-[#001A05]/80">{stat.label}</div>
+                            </div>
                         ))}
                     </div>
-                </div>
-            </div>
 
-            {/* Recent Activity */}
-            <div className="card">
-                <div className="card-header flex justify-between items-center">
-                    <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
-                        Recent Activity
-                    </h2>
-                    <Link to="/patient/records" className="text-primary-600 hover:text-primary-700 text-sm font-medium">
-                        View All →
-                    </Link>
-                </div>
-                <div className="card-body">
-                    {stats.totalRecords === 0 ? (
-                        <div className="text-center py-8 text-gray-500 dark:text-gray-400">
-                            <FileText className="w-12 h-12 mx-auto mb-2 opacity-20" />
-                            <p>No records yet. Upload your first medical record to get started.</p>
+                    {/* Quick Actions - Opella Button Cards */}
+                    <div className="space-y-4">
+                        <h2 className="text-2xl font-bold text-[#001A05] text-[#001A05]">
+                            Quick Actions
+                        </h2>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                            {quickActions.map((action) => (
+                                <Link
+                                    key={action.name}
+                                    to={action.href}
+                                    className="card-light p-6 text-center space-y-3 hover:border-opella-dark/40 dark:hover:border-opella-light/40 transition-all group"
+                                >
+                                    <action.icon className="w-10 h-10 mx-auto text-[#001A05] text-[#001A05] group-hover:scale-110 transition-transform" />
+                                    <h3 className="font-medium text-[#001A05] text-[#001A05]">
+                                        {action.name}
+                                    </h3>
+                                </Link>
+                            ))}
                         </div>
-                    ) : (
-                        <p className="text-gray-600 dark:text-gray-400">
-                            You have {stats.totalRecords} medical record{stats.totalRecords !== 1 ? 's' : ''} uploaded.
-                        </p>
-                    )}
+                    </div>
+
+                    {/* Recent Activity - Opella Card */}
+                    <div className="card-light p-8 space-y-6">
+                        <div className="flex justify-between items-center">
+                            <h2 className="text-2xl font-bold text-[#001A05] text-[#001A05]">
+                                Recent Activity
+                            </h2>
+                            <Link to="/patient/records" className="btn btn-sm btn-dark dark:btn-light">
+                                View All →
+                            </Link>
+                        </div>
+                        {stats.totalRecords === 0 ? (
+                            <div className="text-center py-12">
+                                <FileText className="w-16 h-16 mx-auto mb-4 text-[#001A05]/20 text-[#001A05]/20" />
+                                <p className="text-[#001A05]/70 text-[#001A05]/70">No records yet. Upload your first medical record to get started.</p>
+                            </div>
+                        ) : (
+                            <p className="text-[#001A05]/80 text-[#001A05]/80 text-lg">
+                                You have {stats.totalRecords} medical record{stats.totalRecords !== 1 ? 's' : ''} uploaded.
+                            </p>
+                        )}
+                    </div>
                 </div>
             </div>
         </div>
