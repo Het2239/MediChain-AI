@@ -270,10 +270,17 @@ npm run dev
 
 ## 👥 Team
 
-**Sparsh Agarwal**
-*   *Full Stack Blockchain Developer*
+**Het Chavadiya**
 *   *Smart Contract Architect*
+*   *Web3 Integration*
+
+**Sparsh Agarwal**
 *   *AI Systems Integrator*
+*   *Backend Flow Design*
+
+**Divy Dobariya**
+*   *AI Systems Integrator*
+*   *Backend Flow Design*
 
 ---
 
