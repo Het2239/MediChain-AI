@@ -72,45 +72,45 @@ export default function FileUploadModal({ isOpen, onClose, onSuccess, patientAdd
     if (!isOpen) return null;
 
     return (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-            <div className="bg-white dark:bg-gray-800 rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+        <div className="fixed inset-0 bg-[#001A05]/80 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+            <div className="bg-[#F7EFE6] rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-[#001A05]/20">
                 {/* Header */}
-                <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
-                    <h2 className="text-2xl font-bold text-gray-900 dark:text-white flex items-center space-x-2">
-                        <Upload className="w-6 h-6 text-indigo-600" />
+                <div className="flex items-center justify-between p-6 border-b border-[#001A05]/10 bg-white/50">
+                    <h2 className="text-2xl font-bold text-[#001A05] flex items-center space-x-2">
+                        <Upload className="w-6 h-6 text-[#042B0B]" />
                         <span>Upload Medical Record</span>
                     </h2>
                     <button
                         onClick={onClose}
-                        className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                        className="text-[#001A05]/50 hover:text-[#001A05] transition-colors"
                     >
                         <X className="w-6 h-6" />
                     </button>
                 </div>
 
                 {/* Body */}
-                <div className="p-6 space-y-6">
+                <div className="p-8 space-y-8">
                     {/* File Drop Zone */}
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        <label className="block text-sm font-bold text-[#001A05] mb-2 uppercase tracking-wide">
                             Select File
                         </label>
                         <div
                             {...getRootProps()}
-                            className={`border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-colors ${isDragActive
-                                ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-900/20'
-                                : 'border-gray-300 dark:border-gray-600 hover:border-indigo-400'
+                            className={`border-2 border-dashed rounded-xl p-10 text-center cursor-pointer transition-all ${isDragActive
+                                ? 'border-[#042B0B] bg-[#042B0B]/5 scale-[1.02]'
+                                : 'border-[#001A05]/20 hover:border-[#042B0B]/50 hover:bg-white/50'
                                 }`}
                         >
                             <input {...getInputProps()} />
-                            <Upload className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+                            <Upload className="w-16 h-16 text-[#001A05]/30 mx-auto mb-6" />
                             {selectedFile ? (
-                                <div className="space-y-2">
-                                    <div className="flex items-center justify-center space-x-2 text-green-600 dark:text-green-400">
-                                        <FileText className="w-5 h-5" />
-                                        <span className="font-medium">{selectedFile.name}</span>
+                                <div className="space-y-4">
+                                    <div className="flex items-center justify-center space-x-3 text-[#042B0B] bg-white/80 p-3 rounded-lg border border-[#001A05]/10 inline-block px-6">
+                                        <FileText className="w-6 h-6" />
+                                        <span className="font-bold text-lg">{selectedFile.name}</span>
                                     </div>
-                                    <p className="text-sm text-gray-500">
+                                    <p className="text-sm text-[#001A05]/60 font-mono">
                                         {formatFileSize(selectedFile.size)}
                                     </p>
                                     <button
@@ -118,19 +118,19 @@ export default function FileUploadModal({ isOpen, onClose, onSuccess, patientAdd
                                             e.stopPropagation();
                                             setSelectedFile(null);
                                         }}
-                                        className="text-sm text-red-600 hover:text-red-700"
+                                        className="text-sm text-red-600 hover:text-red-700 font-bold hover:underline"
                                     >
-                                        Remove
+                                        Remove File
                                     </button>
                                 </div>
                             ) : isDragActive ? (
-                                <p className="text-gray-600 dark:text-gray-300">Drop the file here...</p>
+                                <p className="text-[#001A05] text-lg font-medium">Drop the file here...</p>
                             ) : (
-                                <div className="space-y-2">
-                                    <p className="text-gray-600 dark:text-gray-300">
+                                <div className="space-y-3">
+                                    <p className="text-[#001A05] text-xl font-medium">
                                         Drag and drop a file here, or click to browse
                                     </p>
-                                    <p className="text-sm text-gray-500">
+                                    <p className="text-sm text-[#001A05]/50">
                                         Supported: PDF, JPG, PNG, DOC, DOCX, TXT (Max 50MB)
                                     </p>
                                 </div>
@@ -140,13 +140,13 @@ export default function FileUploadModal({ isOpen, onClose, onSuccess, patientAdd
 
                     {/* Category Selection */}
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        <label className="block text-sm font-bold text-[#001A05] mb-2 uppercase tracking-wide">
                             Category
                         </label>
                         <select
                             value={category}
                             onChange={(e) => setCategory(e.target.value)}
-                            className="input"
+                            className="w-full bg-white border border-[#001A05]/20 rounded-lg px-4 py-3 text-[#001A05] focus:outline-none focus:ring-2 focus:ring-[#042B0B] focus:border-transparent transition-all"
                         >
                             <option value="reports">Medical Reports</option>
                             <option value="prescriptions">Prescriptions</option>
@@ -155,16 +155,16 @@ export default function FileUploadModal({ isOpen, onClose, onSuccess, patientAdd
                     </div>
 
                     {/* Security Info */}
-                    <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
-                        <div className="flex items-start space-x-3">
-                            <Lock className="w-5 h-5 text-blue-600 dark:text-blue-400 mt-0.5" />
-                            <div className="text-sm text-blue-800 dark:text-blue-300">
-                                <p className="font-medium mb-1">Secure Upload Process:</p>
-                                <ul className="space-y-1 text-xs">
-                                    <li>• File encrypted with AES-256</li>
-                                    <li>• Stored on decentralized IPFS network</li>
-                                    <li>• Metadata recorded on blockchain</li>
-                                    <li>• Only authorized users can access</li>
+                    <div className="bg-[#042B0B]/5 border border-[#042B0B]/10 rounded-lg p-5">
+                        <div className="flex items-start space-x-4">
+                            <Lock className="w-6 h-6 text-[#042B0B] mt-0.5" />
+                            <div className="text-sm text-[#001A05]">
+                                <p className="font-bold mb-2 text-base">Secure Upload Process:</p>
+                                <ul className="space-y-1.5 text-[#001A05]/70 list-disc ml-4">
+                                    <li>File encrypted with AES-256</li>
+                                    <li>Stored on decentralized IPFS network</li>
+                                    <li>Metadata recorded on blockchain</li>
+                                    <li>Only authorized users can access</li>
                                 </ul>
                             </div>
                         </div>
@@ -172,27 +172,27 @@ export default function FileUploadModal({ isOpen, onClose, onSuccess, patientAdd
                 </div>
 
                 {/* Footer */}
-                <div className="flex items-center justify-end space-x-3 p-6 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/50">
+                <div className="flex items-center justify-end space-x-4 p-6 border-t border-[#001A05]/10 bg-white/50">
                     <button
                         onClick={onClose}
                         disabled={uploading}
-                        className="btn btn-secondary"
+                        className="px-6 py-2 rounded-lg border border-[#001A05]/20 text-[#001A05] hover:bg-[#001A05]/5 font-medium transition-all"
                     >
                         Cancel
                     </button>
                     <button
                         onClick={handleUpload}
                         disabled={!selectedFile || uploading}
-                        className="btn btn-primary flex items-center space-x-2"
+                        className="btn bg-[#042B0B] text-[#F7EFE6] hover:bg-[#042B0B]/90 flex items-center space-x-2 px-6 py-3 text-lg shadow-lg hover:shadow-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                         {uploading ? (
                             <>
-                                <div className="spinner w-4 h-4"></div>
+                                <div className="spinner w-5 h-5 border-[#F7EFE6]/30 border-t-[#F7EFE6]"></div>
                                 <span>Uploading...</span>
                             </>
                         ) : (
                             <>
-                                <Upload className="w-4 h-4" />
+                                <Upload className="w-5 h-5" />
                                 <span>Upload & Encrypt</span>
                             </>
                         )}

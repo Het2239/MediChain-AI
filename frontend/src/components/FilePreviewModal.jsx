@@ -7,47 +7,49 @@ export default function FilePreviewModal({ isOpen, onClose, file }) {
     const isPDF = file.fileType?.toLowerCase() === 'pdf';
 
     return (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-            <div className="bg-white dark:bg-gray-800 rounded-lg max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col">
+        <div className="fixed inset-0 bg-[#001A05]/80 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+            <div className="bg-[#F7EFE6] rounded-lg max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col shadow-2xl border border-[#001A05]/20">
                 {/* Header */}
-                <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
-                    <h2 className="text-xl font-bold text-gray-900 dark:text-white">
-                        File Preview
+                <div className="flex items-center justify-between p-6 border-b border-[#001A05]/10 bg-white/50">
+                    <h2 className="text-xl font-bold text-[#001A05] flex items-center space-x-2">
+                        <FileText className="w-5 h-5 text-[#042B0B]" />
+                        <span>File Preview</span>
                     </h2>
                     <button
                         onClick={onClose}
-                        className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                        className="text-[#001A05]/50 hover:text-[#001A05] transition-colors"
                     >
                         <X className="w-6 h-6" />
                     </button>
                 </div>
 
                 {/* Body */}
-                <div className="flex-1 overflow-y-auto p-6">
+                <div className="flex-1 overflow-y-auto p-6 space-y-6">
                     {/* File Info */}
-                    <div className="mb-4 bg-gray-50 dark:bg-gray-900/50 rounded-lg p-4">
-                        <div className="grid grid-cols-2 gap-4 text-sm">
+                    <div className="bg-white rounded-lg p-5 border border-[#001A05]/10 shadow-sm relative overflow-hidden">
+                        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#042B0B] to-[#F7EFE6]"></div>
+                        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
                             <div>
-                                <span className="text-gray-600 dark:text-gray-400">Type:</span>
-                                <span className="ml-2 font-medium text-gray-900 dark:text-white uppercase">
+                                <span className="text-[#001A05]/60 block mb-1">Type</span>
+                                <span className="font-bold text-[#001A05] uppercase bg-[#042B0B]/5 px-2 py-0.5 rounded inline-block">
                                     {file.fileType}
                                 </span>
                             </div>
                             <div>
-                                <span className="text-gray-600 dark:text-gray-400">Category:</span>
-                                <span className="ml-2 font-medium text-gray-900 dark:text-white capitalize">
+                                <span className="text-[#001A05]/60 block mb-1">Category</span>
+                                <span className="font-bold text-[#001A05] capitalize">
                                     {file.category}
                                 </span>
                             </div>
                             <div>
-                                <span className="text-gray-600 dark:text-gray-400">CID:</span>
-                                <span className="ml-2 font-mono text-xs text-gray-900 dark:text-white">
-                                    {file.cid}
+                                <span className="text-[#001A05]/60 block mb-1">CID</span>
+                                <span className="font-mono text-xs text-[#001A05] break-all">
+                                    {file.cid.slice(0, 10)}...{file.cid.slice(-10)}
                                 </span>
                             </div>
                             <div>
-                                <span className="text-gray-600 dark:text-gray-400">Date:</span>
-                                <span className="ml-2 text-gray-900 dark:text-white">
+                                <span className="text-[#001A05]/60 block mb-1">Date</span>
+                                <span className="font-medium text-[#001A05]">
                                     {new Date(file.timestampDate).toLocaleDateString()}
                                 </span>
                             </div>
@@ -56,36 +58,36 @@ export default function FilePreviewModal({ isOpen, onClose, file }) {
 
                     {/* Preview */}
                     {isImage ? (
-                        <div className="bg-gray-100 dark:bg-gray-900 rounded-lg p-4 flex items-center justify-center">
-                            <p className="text-gray-600 dark:text-gray-400">
-                                <FileText className="w-12 h-12 mx-auto mb-2" />
-                                Image preview requires file download
+                        <div className="bg-[#001A05]/5 border border-[#001A05]/10 rounded-lg p-8 flex flex-col items-center justify-center min-h-[300px]">
+                            <p className="text-[#001A05]/60 text-center text-lg">
+                                <FileText className="w-16 h-16 mx-auto mb-4 text-[#042B0B]/30" />
+                                Image preview requires file download for security
                             </p>
                         </div>
                     ) : isPDF ? (
-                        <div className="bg-gray-100 dark:bg-gray-900 rounded-lg p-4 flex items-center justify-center min-h-[400px]">
-                            <p className="text-gray-600 dark:text-gray-400">
-                                <FileText className="w-12 h-12 mx-auto mb-2" />
-                                PDF preview requires file download
+                        <div className="bg-[#001A05]/5 border border-[#001A05]/10 rounded-lg p-8 flex flex-col items-center justify-center min-h-[400px]">
+                            <p className="text-[#001A05]/60 text-center text-lg">
+                                <FileText className="w-16 h-16 mx-auto mb-4 text-[#042B0B]/30" />
+                                PDF preview requires file download for security
                             </p>
                         </div>
                     ) : (
-                        <div className="bg-gray-100 dark:bg-gray-900 rounded-lg p-8 text-center">
-                            <FileText className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-                            <p className="text-gray-600 dark:text-gray-400">
+                        <div className="bg-[#001A05]/5 border border-[#001A05]/10 rounded-lg p-12 text-center">
+                            <FileText className="w-20 h-20 text-[#001A05]/20 mx-auto mb-6" />
+                            <p className="text-[#001A05]/80 text-xl font-medium">
                                 Preview not available for {file.fileType.toUpperCase()} files
                             </p>
-                            <p className="text-sm text-gray-500 dark:text-gray-500 mt-2">
-                                Download the file to view its contents
+                            <p className="text-[#001A05]/60 mt-2">
+                                Download the file to view its contents securely
                             </p>
                         </div>
                     )}
                 </div>
 
                 {/* Footer */}
-                <div className="p-4 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/50">
-                    <button onClick={onClose} className="btn btn-secondary w-full">
-                        Close
+                <div className="p-6 border-t border-[#001A05]/10 bg-white/50">
+                    <button onClick={onClose} className="btn bg-[#042B0B] text-[#F7EFE6] hover:bg-[#042B0B]/90 w-full shadow-md hover:shadow-lg transition-all">
+                        Close Preview
                     </button>
                 </div>
             </div>

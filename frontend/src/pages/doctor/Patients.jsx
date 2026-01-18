@@ -76,171 +76,173 @@ export default function DoctorPatients() {
     };
 
     const getRequestStatus = (request) => {
-        if (request.approved) return { label: 'Approved', color: 'badge-success' };
-        if (!request.active) return { label: 'Denied', color: 'badge-danger' };
-        return { label: 'Pending', color: 'badge-warning' };
+        if (request.approved) return { label: 'Approved', color: 'bg-green-100 text-green-800' };
+        if (!request.active) return { label: 'Denied', color: 'bg-red-100 text-red-800' };
+        return { label: 'Pending', color: 'bg-amber-100 text-amber-800' };
     };
 
     return (
-        <div className="space-y-6">
-            {/* Header */}
-            <div className="flex justify-between items-center">
-                <div>
-                    <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-                        My Patients
-                    </h1>
-                    <p className="mt-1 text-gray-600 dark:text-gray-400">
-                        Request access and view authorized patient records
-                    </p>
+        <div className="section-light min-h-screen">
+            <div className="container-opella space-y-8 py-8">
+                {/* Header */}
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                    <div>
+                        <h1 className="heading-opella text-3xl font-bold text-[#001A05]">
+                            My Patients
+                        </h1>
+                        <p className="mt-1 text-[#001A05]/70 text-lg">
+                            Request access and view authorized patient records
+                        </p>
+                    </div>
+                    <button
+                        onClick={() => setShowRequestForm(!showRequestForm)}
+                        className="btn bg-[#042B0B] text-[#F7EFE6] hover:bg-[#042B0B]/90 flex items-center space-x-2"
+                    >
+                        <Send className="w-4 h-4" />
+                        <span>{showRequestForm ? 'Cancel' : 'Request Access'}</span>
+                    </button>
                 </div>
-                <button
-                    onClick={() => setShowRequestForm(!showRequestForm)}
-                    className="btn btn-primary flex items-center space-x-2"
-                >
-                    <Send className="w-4 h-4" />
-                    <span>{showRequestForm ? 'Cancel' : 'Request Access'}</span>
-                </button>
-            </div>
 
-            {/* Request Access Form */}
-            {showRequestForm && (
-                <div className="card">
-                    <div className="card-header">
-                        <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
-                            Request Patient Access
+                {/* Request Access Form */}
+                {showRequestForm && (
+                    <div className="card-light p-6">
+                        <div className="mb-6 pb-4 border-b border-[#001A05]/10">
+                            <h2 className="text-xl font-bold text-[#001A05]">
+                                Request Patient Access
+                            </h2>
+                        </div>
+                        <div className="space-y-4">
+                            <div>
+                                <label className="block text-sm font-semibold text-[#001A05] mb-2">
+                                    Patient Wallet Address
+                                </label>
+                                <input
+                                    type="text"
+                                    value={requestForm.patientAddress}
+                                    onChange={(e) => setRequestForm({ ...requestForm, patientAddress: e.target.value })}
+                                    placeholder="0x..."
+                                    className="input bg-white border-[#001A05]/20 focus:border-[#042B0B]"
+                                />
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-semibold text-[#001A05] mb-2">
+                                    Reason for Access
+                                </label>
+                                <textarea
+                                    value={requestForm.reason}
+                                    onChange={(e) => setRequestForm({ ...requestForm, reason: e.target.value })}
+                                    placeholder="Explain why you need access to this patient's records..."
+                                    rows={4}
+                                    className="input bg-white border-[#001A05]/20 focus:border-[#042B0B]"
+                                />
+                            </div>
+
+                            <button
+                                onClick={handleSubmitRequest}
+                                disabled={submitting}
+                                className="btn bg-[#042B0B] text-[#F7EFE6] hover:bg-[#042B0B]/90 w-full"
+                            >
+                                {submitting ? 'Submitting...' : 'Submit Request'}
+                            </button>
+                        </div>
+                    </div>
+                )}
+
+                {/* Authorized Patients */}
+                <div className="card-light p-6">
+                    <div className="flex items-center space-x-2 mb-6 pb-4 border-b border-[#001A05]/10">
+                        <CheckCircle className="w-5 h-5 text-green-600" />
+                        <h2 className="text-xl font-bold text-[#001A05]">
+                            Authorized Patients ({authorizedPatients.length})
                         </h2>
                     </div>
-                    <div className="card-body space-y-4">
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                                Patient Wallet Address
-                            </label>
-                            <input
-                                type="text"
-                                value={requestForm.patientAddress}
-                                onChange={(e) => setRequestForm({ ...requestForm, patientAddress: e.target.value })}
-                                placeholder="0x..."
-                                className="input"
-                            />
-                        </div>
-
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                                Reason for Access
-                            </label>
-                            <textarea
-                                value={requestForm.reason}
-                                onChange={(e) => setRequestForm({ ...requestForm, reason: e.target.value })}
-                                placeholder="Explain why you need access to this patient's records..."
-                                rows={4}
-                                className="input"
-                            />
-                        </div>
-
-                        <button
-                            onClick={handleSubmitRequest}
-                            disabled={submitting}
-                            className="btn btn-primary w-full"
-                        >
-                            {submitting ? 'Submitting...' : 'Submit Request'}
-                        </button>
-                    </div>
-                </div>
-            )}
-
-            {/* Authorized Patients */}
-            <div className="card">
-                <div className="card-header flex items-center space-x-2">
-                    <CheckCircle className="w-5 h-5 text-green-600" />
-                    <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
-                        Authorized Patients ({authorizedPatients.length})
-                    </h2>
-                </div>
-                <div className="card-body">
-                    {loading ? (
-                        <div className="flex justify-center py-8">
-                            <div className="spinner w-8 h-8"></div>
-                        </div>
-                    ) : authorizedPatients.length === 0 ? (
-                        <p className="text-center text-gray-500 dark:text-gray-400 py-8">
-                            No authorized patients yet. Request access to view patient records.
-                        </p>
-                    ) : (
-                        <div className="space-y-3">
-                            {authorizedPatients.map((patient, idx) => (
-                                <div
-                                    key={idx}
-                                    className="flex items-center justify-between p-4 border border-gray-200 dark:border-gray-700 rounded-lg"
-                                >
-                                    <div className="flex items-center space-x-3">
-                                        <div className="w-10 h-10 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center">
-                                            <Users className="w-5 h-5 text-green-600 dark:text-green-400" />
-                                        </div>
-                                        <p className="font-mono text-sm text-gray-900 dark:text-white">
-                                            {patient}
-                                        </p>
-                                    </div>
-                                    <button
-                                        onClick={() => handleViewRecords(patient)}
-                                        className="btn btn-secondary btn-sm"
-                                    >
-                                        View Records
-                                    </button>
-                                </div>
-                            ))}
-                        </div>
-                    )}
-                </div>
-            </div>
-
-            {/* My Requests */}
-            <div className="card">
-                <div className="card-header flex items-center space-x-2">
-                    <Clock className="w-5 h-5 text-amber-600" />
-                    <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
-                        My Access Requests ({myRequests.length})
-                    </h2>
-                </div>
-                <div className="card-body">
-                    {myRequests.length === 0 ? (
-                        <p className="text-center text-gray-500 dark:text-gray-400 py-8">
-                            No access requests yet
-                        </p>
-                    ) : (
-                        <div className="space-y-3">
-                            {myRequests.map((request, idx) => {
-                                const status = getRequestStatus(request);
-                                return (
+                    <div>
+                        {loading ? (
+                            <div className="flex justify-center py-8">
+                                <div className="spinner w-8 h-8 border-[#042B0B]/20 border-t-[#042B0B]"></div>
+                            </div>
+                        ) : authorizedPatients.length === 0 ? (
+                            <p className="text-center text-[#001A05]/50 py-8 italic">
+                                No authorized patients yet. Request access to view patient records.
+                            </p>
+                        ) : (
+                            <div className="space-y-3">
+                                {authorizedPatients.map((patient, idx) => (
                                     <div
                                         key={idx}
-                                        className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg"
+                                        className="flex items-center justify-between p-4 bg-white border border-[#001A05]/10 rounded-lg hover:border-[#042B0B]/30 transition-all shadow-sm"
                                     >
-                                        <div className="flex items-start justify-between mb-2">
-                                            <div className="flex-1">
-                                                <div className="flex items-center space-x-2 mb-1">
-                                                    <p className="font-mono text-sm text-gray-900 dark:text-white">
-                                                        {request.patient}
+                                        <div className="flex items-center space-x-3">
+                                            <div className="w-10 h-10 bg-[#042B0B]/10 rounded-full flex items-center justify-center">
+                                                <Users className="w-5 h-5 text-[#001A05]" />
+                                            </div>
+                                            <p className="font-mono text-sm text-[#001A05] font-medium">
+                                                {patient}
+                                            </p>
+                                        </div>
+                                        <button
+                                            onClick={() => handleViewRecords(patient)}
+                                            className="btn bg-[#042B0B]/10 text-[#001A05] hover:bg-[#042B0B]/20 btn-sm"
+                                        >
+                                            View Records
+                                        </button>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                </div>
+
+                {/* My Requests */}
+                <div className="card-light p-6">
+                    <div className="flex items-center space-x-2 mb-6 pb-4 border-b border-[#001A05]/10">
+                        <Clock className="w-5 h-5 text-amber-600" />
+                        <h2 className="text-xl font-bold text-[#001A05]">
+                            My Access Requests ({myRequests.length})
+                        </h2>
+                    </div>
+                    <div>
+                        {myRequests.length === 0 ? (
+                            <p className="text-center text-[#001A05]/50 py-8 italic">
+                                No access requests yet
+                            </p>
+                        ) : (
+                            <div className="space-y-3">
+                                {myRequests.map((request, idx) => {
+                                    const status = getRequestStatus(request);
+                                    return (
+                                        <div
+                                            key={idx}
+                                            className="p-4 bg-white border border-[#001A05]/10 rounded-lg shadow-sm"
+                                        >
+                                            <div className="flex items-start justify-between mb-2">
+                                                <div className="flex-1">
+                                                    <div className="flex items-center space-x-3 mb-2">
+                                                        <p className="font-mono text-sm font-bold text-[#001A05]">
+                                                            {request.patient}
+                                                        </p>
+                                                        <span className={`px-2 py-0.5 rounded text-xs font-bold ${status.color}`}>
+                                                            {status.label}
+                                                        </span>
+                                                    </div>
+                                                    <p className="text-sm text-[#001A05]/80">
+                                                        <strong className="text-[#001A05]">Reason:</strong> {request.reason}
                                                     </p>
-                                                    <span className={`badge ${status.color}`}>
-                                                        {status.label}
-                                                    </span>
                                                 </div>
-                                                <p className="text-sm text-gray-600 dark:text-gray-400">
-                                                    <strong>Reason:</strong> {request.reason}
-                                                </p>
+                                            </div>
+                                            <div className="text-xs text-[#001A05]/50 space-y-1 mt-2 pt-2 border-t border-[#001A05]/5">
+                                                <p>Requested: {new Date(request.requestedAtDate).toLocaleString()}</p>
+                                                {request.respondedAtDate && (
+                                                    <p>Responded: {new Date(request.respondedAtDate).toLocaleString()}</p>
+                                                )}
                                             </div>
                                         </div>
-                                        <div className="text-xs text-gray-500 space-y-1">
-                                            <p>Requested: {new Date(request.requestedAtDate).toLocaleString()}</p>
-                                            {request.respondedAtDate && (
-                                                <p>Responded: {new Date(request.respondedAtDate).toLocaleString()}</p>
-                                            )}
-                                        </div>
-                                    </div>
-                                );
-                            })}
-                        </div>
-                    )}
+                                    );
+                                })}
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
         </div>

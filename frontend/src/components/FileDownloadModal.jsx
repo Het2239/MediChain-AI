@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Download, Lock, Eye, EyeOff } from 'lucide-react';
+import { Download, Lock, CheckCircle, AlertTriangle } from 'lucide-react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
@@ -50,12 +50,12 @@ export default function FileDownloadModal({ isOpen, onClose, file, patientAddres
     if (!isOpen || !file) return null;
 
     return (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-            <div className="bg-white dark:bg-gray-800 rounded-lg max-w-md w-full">
+        <div className="fixed inset-0 bg-[#001A05]/80 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+            <div className="bg-[#F7EFE6] rounded-lg max-w-md w-full shadow-2xl border border-[#001A05]/20">
                 {/* Header */}
-                <div className="p-6 border-b border-gray-200 dark:border-gray-700">
-                    <h2 className="text-xl font-bold text-gray-900 dark:text-white flex items-center space-x-2">
-                        <Download className="w-5 h-5 text-indigo-600" />
+                <div className="p-6 border-b border-[#001A05]/10 bg-white/50">
+                    <h2 className="text-xl font-bold text-[#001A05] flex items-center space-x-2">
+                        <Download className="w-5 h-5 text-[#042B0B]" />
                         <span>Download File</span>
                     </h2>
                 </div>
@@ -63,23 +63,25 @@ export default function FileDownloadModal({ isOpen, onClose, file, patientAddres
                 {/* Body */}
                 <div className="p-6 space-y-4">
                     {/* File Info */}
-                    <div className="bg-gray-50 dark:bg-gray-900/50 rounded-lg p-4">
-                        <div className="space-y-2 text-sm">
-                            <div>
-                                <span className="text-gray-600 dark:text-gray-400">Category:</span>
-                                <span className="ml-2 font-medium text-gray-900 dark:text-white capitalize">
+                    <div className="bg-white rounded-lg p-5 border border-[#001A05]/10 shadow-sm relative overflow-hidden">
+                        <div className="absolute top-0 right-0 w-24 h-24 bg-[#042B0B]/5 rounded-bl-[100px] -mr-8 -mt-8 pointer-events-none"></div>
+
+                        <div className="space-y-3 text-sm relative z-10">
+                            <div className="flex justify-between items-center border-b border-[#001A05]/5 pb-2">
+                                <span className="text-[#001A05]/60">Category:</span>
+                                <span className="font-bold text-[#001A05] capitalize bg-[#042B0B]/5 px-2 py-0.5 rounded">
                                     {file.category}
                                 </span>
                             </div>
-                            <div>
-                                <span className="text-gray-600 dark:text-gray-400">Type:</span>
-                                <span className="ml-2 font-medium text-gray-900 dark:text-white uppercase">
+                            <div className="flex justify-between items-center border-b border-[#001A05]/5 pb-2">
+                                <span className="text-[#001A05]/60">Type:</span>
+                                <span className="font-bold text-[#001A05] uppercase">
                                     {file.fileType}
                                 </span>
                             </div>
-                            <div>
-                                <span className="text-gray-600 dark:text-gray-400">Uploaded:</span>
-                                <span className="ml-2 text-gray-900 dark:text-white">
+                            <div className="flex justify-between items-center">
+                                <span className="text-[#001A05]/60">Uploaded:</span>
+                                <span className="font-medium text-[#001A05]">
                                     {new Date(file.timestampDate).toLocaleDateString()}
                                 </span>
                             </div>
@@ -87,30 +89,33 @@ export default function FileDownloadModal({ isOpen, onClose, file, patientAddres
                     </div>
 
                     {/* Info Message */}
-                    <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-3">
-                        <p className="text-xs text-blue-800 dark:text-blue-300">
-                            ✔️ This file will be decrypted automatically and downloaded to your device.
-                        </p>
+                    <div className="bg-[#042B0B]/5 border border-[#042B0B]/10 rounded-lg p-4">
+                        <div className="flex items-start space-x-3">
+                            <CheckCircle className="w-5 h-5 text-green-700 mt-0.5" />
+                            <p className="text-sm text-[#001A05]/80">
+                                This file will be <strong>automatically decrypted</strong> and downloaded to your device securely.
+                            </p>
+                        </div>
                     </div>
                 </div>
 
                 {/* Footer */}
-                <div className="flex items-center justify-end space-x-3 p-6 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/50">
+                <div className="flex items-center justify-end space-x-3 p-6 border-t border-[#001A05]/10 bg-white/50">
                     <button
                         onClick={onClose}
                         disabled={downloading}
-                        className="btn btn-secondary"
+                        className="px-5 py-2 rounded-lg border border-[#001A05]/20 text-[#001A05] hover:bg-[#001A05]/5 font-medium transition-all"
                     >
                         Cancel
                     </button>
                     <button
                         onClick={handleDownload}
                         disabled={downloading}
-                        className="btn btn-primary flex items-center space-x-2"
+                        className="btn bg-[#042B0B] text-[#F7EFE6] hover:bg-[#042B0B]/90 flex items-center space-x-2 px-5 py-2 shadow-md hover:shadow-lg transition-all"
                     >
                         {downloading ? (
                             <>
-                                <div className="spinner w-4 h-4"></div>
+                                <div className="spinner w-4 h-4 border-[#F7EFE6]/30 border-t-[#F7EFE6]"></div>
                                 <span>Downloading...</span>
                             </>
                         ) : (

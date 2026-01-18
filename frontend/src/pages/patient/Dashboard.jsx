@@ -158,10 +158,10 @@ export default function PatientDashboard() {
                 <div className="container-opella space-y-12">
                     {/* Page Header - Opella Bold */}
                     <div className="text-center md:text-left">
-                        <h1 className="heading-opella text-4xl md:text-5xl font-bold text-[#001A05] text-[#001A05]">
+                        <h1 className="heading-opella text-3xl md:text-4xl font-bold text-[#001A05] text-[#001A05]">
                             Patient Dashboard
                         </h1>
-                        <p className="mt-4 text-xl text-[#001A05]/90 text-[#001A05]/90">
+                        <p className="mt-4 text-lg text-[#001A05]/90 text-[#001A05]/90">
                             Manage your medical records and control access
                         </p>
                     </div>
@@ -174,7 +174,7 @@ export default function PatientDashboard() {
                                 {stat.label === 'Pending Requests' && stat.value > 0 && (
                                     <span className="badge badge-warning">{stat.value} new</span>
                                 )}
-                                <div className="text-4xl font-bold text-[#001A05] text-[#001A05]">{stat.value}</div>
+                                <div className="text-3xl font-bold text-[#001A05] text-[#001A05]">{stat.value}</div>
                                 <div className="text-sm text-[#001A05]/80 text-[#001A05]/80">{stat.label}</div>
                             </div>
                         ))}
@@ -182,7 +182,7 @@ export default function PatientDashboard() {
 
                     {/* Quick Actions - Opella Button Cards */}
                     <div className="space-y-4">
-                        <h2 className="text-2xl font-bold text-[#001A05] text-[#001A05]">
+                        <h2 className="text-xl font-bold text-[#001A05] text-[#001A05]">
                             Quick Actions
                         </h2>
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -193,7 +193,7 @@ export default function PatientDashboard() {
                                     className="card-light p-6 text-center space-y-3 hover:border-opella-dark/40 dark:hover:border-opella-light/40 transition-all group"
                                 >
                                     <action.icon className="w-10 h-10 mx-auto text-[#001A05] text-[#001A05] group-hover:scale-110 transition-transform" />
-                                    <h3 className="font-medium text-[#001A05] text-[#001A05]">
+                                    <h3 className="font-semibold text-base text-[#001A05] text-[#001A05]">
                                         {action.name}
                                     </h3>
                                 </Link>
@@ -204,7 +204,7 @@ export default function PatientDashboard() {
                     {/* Recent Activity - Opella Card */}
                     <div className="card-light p-8 space-y-6">
                         <div className="flex justify-between items-center">
-                            <h2 className="text-2xl font-bold text-[#001A05] text-[#001A05]">
+                            <h2 className="text-xl font-bold text-[#001A05] text-[#001A05]">
                                 Recent Activity
                             </h2>
                             <Link to="/patient/records" className="btn btn-sm btn-dark dark:btn-light">

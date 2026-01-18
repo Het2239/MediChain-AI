@@ -64,116 +64,125 @@ export default function PatientAccessControl() {
 
     if (loading) {
         return (
-            <div className="flex justify-center py-12">
-                <div className="spinner w-10 h-10"></div>
+            <div className="section-light min-h-screen">
+                <div className="flex justify-center py-12">
+                    <div className="spinner w-10 h-10 border-[#042B0B]/20 border-t-[#042B0B]"></div>
+                </div>
             </div>
         );
     }
 
     return (
-        <div className="space-y-6">
-            <div>
-                <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-                    Access Control
-                </h1>
-                <p className="mt-1 text-gray-600 dark:text-gray-400">
-                    Manage who can access your medical records
-                </p>
-            </div>
+        <div className="section-light min-h-screen">
+            <div className="container-opella space-y-8 py-8">
+                <div>
+                    <h1 className="heading-opella text-3xl font-bold text-[#001A05]">
+                        Access Control
+                    </h1>
+                    <p className="mt-1 text-[#001A05]/70 text-lg">
+                        Manage who can access your medical records
+                    </p>
+                </div>
 
-            {/* Pending Requests */}
-            <div className="card">
-                <div className="card-header flex items-center justify-between">
-                    <div className="flex items-center space-x-2">
-                        <Clock className="w-5 h-5 text-warning-600" />
-                        <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
-                            Pending Requests
-                        </h2>
-                        {pendingRequests.length > 0 && (
-                            <span className="badge badge-warning">{pendingRequests.length}</span>
+                {/* Pending Requests */}
+                <div className="card-light p-6">
+                    <div className="flex items-center justify-between mb-6 pb-4 border-b border-[#001A05]/10">
+                        <div className="flex items-center space-x-2">
+                            <Clock className="w-5 h-5 text-amber-600" />
+                            <h2 className="text-xl font-bold text-[#001A05]">
+                                Pending Requests
+                            </h2>
+                            {pendingRequests.length > 0 && (
+                                <span className="bg-amber-100 text-amber-800 text-xs font-bold px-2 py-0.5 rounded-full border border-amber-200">
+                                    {pendingRequests.length}
+                                </span>
+                            )}
+                        </div>
+                    </div>
+                    <div>
+                        {pendingRequests.length === 0 ? (
+                            <p className="text-[#001A05]/50 text-center py-8 italic">
+                                No pending access requests
+                            </p>
+                        ) : (
+                            <div className="space-y-4">
+                                {pendingRequests.map((request, idx) => (
+                                    <div key={idx} className="bg-white border border-[#001A05]/10 rounded-lg p-6 shadow-sm hover:border-[#042B0B]/30 transition-all">
+                                        <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+                                            <div className="flex-1">
+                                                <p className="font-mono text-sm font-bold text-[#001A05] bg-[#001A05]/5 p-2 rounded inline-block mb-3">
+                                                    {request.doctor}
+                                                </p>
+                                                <p className="text-[#001A05]/80 text-lg mb-2">
+                                                    <strong className="text-[#001A05]">Reason:</strong> {request.reason}
+                                                </p>
+                                                <p className="text-xs text-[#001A05]/50 flex items-center">
+                                                    <Clock className="w-3 h-3 mr-1" />
+                                                    Requested {new Date(request.requestedAtDate).toLocaleString()}
+                                                </p>
+                                            </div>
+                                            <div className="flex space-x-3 md:ml-4">
+                                                <button
+                                                    onClick={() => handleApprove(request.doctor)}
+                                                    className="btn bg-green-600 hover:bg-green-700 text-white btn-sm flex items-center space-x-1"
+                                                >
+                                                    <Check className="w-4 h-4" />
+                                                    <span>Approve</span>
+                                                </button>
+                                                <button
+                                                    className="btn bg-red-600 hover:bg-red-700 text-white btn-sm flex items-center space-x-1"
+                                                >
+                                                    <X className="w-4 h-4" />
+                                                    <span>Deny</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
                         )}
                     </div>
                 </div>
-                <div className="card-body">
-                    {pendingRequests.length === 0 ? (
-                        <p className="text-gray-500 dark:text-gray-400 text-center py-4">
-                            No pending access requests
-                        </p>
-                    ) : (
-                        <div className="space-y-4">
-                            {pendingRequests.map((request, idx) => (
-                                <div key={idx} className="border dark:border-gray-700 rounded-lg p-4">
-                                    <div className="flex items-start justify-between">
-                                        <div className="flex-1">
-                                            <p className="font-mono text-sm text-gray-900 dark:text-white">
-                                                {request.doctor}
-                                            </p>
-                                            <p className="text-gray-600 dark:text-gray-400 mt-2">
-                                                <strong>Reason:</strong> {request.reason}
-                                            </p>
-                                            <p className="text-xs text-gray-500 mt-2">
-                                                Requested {new Date(request.requestedAtDate).toLocaleString()}
-                                            </p>
-                                        </div>
-                                        <div className="flex space-x-2 ml-4">
-                                            <button
-                                                onClick={() => handleApprove(request.doctor)}
-                                                className="btn btn-success btn-sm flex items-center space-x-1"
-                                            >
-                                                <Check className="w-4 h-4" />
-                                                <span>Approve</span>
-                                            </button>
-                                            <button
-                                                className="btn btn-danger btn-sm flex items-center space-x-1"
-                                            >
-                                                <X className="w-4 h-4" />
-                                                <span>Deny</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    )}
-                </div>
-            </div>
 
-            {/* Authorized Doctors */}
-            <div className="card">
-                <div className="card-header flex items-center space-x-2">
-                    <Users className="w-5 h-5 text-success-600" />
-                    <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
-                        Authorized Doctors
-                    </h2>
-                    <span className="badge badge-success">{authorizedDoctors.length}</span>
-                </div>
-                <div className="card-body">
-                    {authorizedDoctors.length === 0 ? (
-                        <p className="text-gray-500 dark:text-gray-400 text-center py-4">
-                            No doctors have access yet
-                        </p>
-                    ) : (
-                        <div className="space-y-3">
-                            {authorizedDoctors.map((doctor, idx) => (
-                                <div key={idx} className="flex items-center justify-between p-4 border dark:border-gray-700 rounded-lg">
-                                    <div className="flex items-center space-x-3">
-                                        <div className="w-10 h-10 bg-success-100 dark:bg-success-900/30 rounded-full flex items-center justify-center">
-                                            <Shield className="w-5 h-5 text-success-600 dark:text-success-400" />
+                {/* Authorized Doctors */}
+                <div className="card-light p-6">
+                    <div className="flex items-center space-x-2 mb-6 pb-4 border-b border-[#001A05]/10">
+                        <Users className="w-5 h-5 text-green-600" />
+                        <h2 className="text-xl font-bold text-[#001A05]">
+                            Authorized Doctors
+                        </h2>
+                        <span className="bg-green-100 text-green-800 text-xs font-bold px-2 py-0.5 rounded-full border border-green-200">
+                            {authorizedDoctors.length}
+                        </span>
+                    </div>
+                    <div>
+                        {authorizedDoctors.length === 0 ? (
+                            <p className="text-[#001A05]/50 text-center py-8 italic">
+                                No doctors have access yet
+                            </p>
+                        ) : (
+                            <div className="space-y-3">
+                                {authorizedDoctors.map((doctor, idx) => (
+                                    <div key={idx} className="flex items-center justify-between p-4 bg-white border border-[#001A05]/10 rounded-lg hover:border-[#042B0B]/30 transition-all shadow-sm">
+                                        <div className="flex items-center space-x-3">
+                                            <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center border border-green-200">
+                                                <Shield className="w-5 h-5 text-green-700" />
+                                            </div>
+                                            <p className="font-mono text-sm font-medium text-[#001A05]">
+                                                {doctor}
+                                            </p>
                                         </div>
-                                        <p className="font-mono text-sm text-gray-900 dark:text-white">
-                                            {doctor}
-                                        </p>
+                                        <button
+                                            onClick={() => handleRevoke(doctor)}
+                                            className="btn bg-[#042B0B]/10 hover:bg-red-50 text-[#001A05] hover:text-red-700 hover:border-red-200 btn-sm border border-[#042B0B]/10 transition-colors"
+                                        >
+                                            Revoke Access
+                                        </button>
                                     </div>
-                                    <button
-                                        onClick={() => handleRevoke(doctor)}
-                                        className="btn btn-danger btn-sm"
-                                    >
-                                        Revoke Access
-                                    </button>
-                                </div>
-                            ))}
-                        </div>
-                    )}
+                                ))}
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
         </div>

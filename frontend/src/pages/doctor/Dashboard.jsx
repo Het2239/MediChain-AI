@@ -145,8 +145,8 @@ export default function DoctorDashboard() {
                     {doctorInfo && (
                         <div className="card-light p-8">
                             <div className="flex items-center space-x-6">
-                                <div className="w-20 h-20 bg-opella-dark dark:bg-opella-light rounded-full flex items-center justify-center flex-shrink-0">
-                                    <Users className="w-10 h-10 text-white text-[#001A05]" />
+                                <div className="w-20 h-20 bg-[#042B0B]/5 rounded-full flex items-center justify-center flex-shrink-0 border border-[#042B0B]/10">
+                                    <Users className="w-10 h-10 text-[#001A05]" />
                                 </div>
                                 <div>
                                     <h3 className="text-xl font-bold text-[#001A05] text-[#001A05] mb-1">
